@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33417.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.API", "Artemis.API\Artemis.API.csproj", "{86FD91CF-AFD6-4A90-9CF8-58352BAC3BF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Contracts", "Artemis.Contracts\Artemis.Contracts.csproj", "{F44DB283-04E8-4D51-AD51-38B91AEB09D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Data.Db", "Artemis.Data.Db\Artemis.Data.Db.csproj", "{46CDFBDD-4F44-4D8A-8421-557EE157F9B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis.Services", "Artemis.Services\Artemis.Services.csproj", "{A89D7C52-0FB4-4169-9476-2E956C8716CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86FD91CF-AFD6-4A90-9CF8-58352BAC3BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FD91CF-AFD6-4A90-9CF8-58352BAC3BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FD91CF-AFD6-4A90-9CF8-58352BAC3BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FD91CF-AFD6-4A90-9CF8-58352BAC3BF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F44DB283-04E8-4D51-AD51-38B91AEB09D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F44DB283-04E8-4D51-AD51-38B91AEB09D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F44DB283-04E8-4D51-AD51-38B91AEB09D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F44DB283-04E8-4D51-AD51-38B91AEB09D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46CDFBDD-4F44-4D8A-8421-557EE157F9B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46CDFBDD-4F44-4D8A-8421-557EE157F9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46CDFBDD-4F44-4D8A-8421-557EE157F9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46CDFBDD-4F44-4D8A-8421-557EE157F9B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89D7C52-0FB4-4169-9476-2E956C8716CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89D7C52-0FB4-4169-9476-2E956C8716CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89D7C52-0FB4-4169-9476-2E956C8716CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89D7C52-0FB4-4169-9476-2E956C8716CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F411A9B7-2945-4877-B4BB-CE5FB9ED17C5}
+	EndGlobalSection
+EndGlobal
