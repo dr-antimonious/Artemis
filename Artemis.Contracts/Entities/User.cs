@@ -1,20 +1,34 @@
-﻿namespace Artemis.Contracts.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Artemis.Contracts.Entities
 {
-    public class User
+    public class User : IdentityUser
     {
-        private string id = default!;
-        private string firstName = default!;
-        private string addtnlNames = default!;
-        private string lastName = default!;
-        private DateTime dateOfBirth = default!;
-        private char gender = default!;
-        private string email = default!;
-        private string phoneNumber = default!;
-        private string password = default!;
-        private bool isCoach = default!;
-        private bool isManager = default!;
-        private bool isDoctor = default!;
-        private bool isShooter = default!;
+        public string Id { get; set; } = default!;
+
+        public string FirstName { get; set; } = default!;
+
+        public string AddtnlNames { get; set; } = default!;
+
+        public string LastName { get; set; } = default!;
+
+        public DateTime DateOfBirth { get; set; } = default!;
+
+        public char Gender { get; set; } = default!;
+
+        public string Email { get; set; } = default!;
+
+        public string PhoneNumber { get; set; } = default!;
+
+        public string Password { get; set; } = default!;
+
+        public bool IsCoach { get; set; } = default!;
+
+        public bool IsManager { get; set; } = default!;
+
+        public bool IsDoctor { get; set; } = default!;
+
+        public bool IsShooter { get; set; } = default!;
 
         public User()
         {
@@ -35,18 +49,18 @@
             bool isShooter)
             : this()
         {
-            this.firstName = firstName;
-            this.addtnlNames = addtnlNames;
-            this.lastName = lastName;
-            this.dateOfBirth = dateOfBirth;
-            this.gender = gender;
-            this.email = email;
-            this.phoneNumber = phoneNumber;
-            this.password = password;
-            this.isCoach = isCoach;
-            this.isManager = isManager;
-            this.isDoctor = isDoctor;
-            this.isShooter = isShooter;
+            this.FirstName = firstName;
+            this.AddtnlNames = addtnlNames;
+            this.LastName = lastName;
+            this.DateOfBirth = dateOfBirth;
+            this.Gender = gender;
+            this.Email = email;
+            this.PhoneNumber = phoneNumber;
+            this.Password = password;
+            this.IsCoach = isCoach;
+            this.IsManager = isManager;
+            this.IsDoctor = isDoctor;
+            this.IsShooter = isShooter;
         }
 
         public User(
@@ -77,85 +91,7 @@
                 isDoctor,
                 isShooter)
         {
-            this.id = id;
-        }
-
-        public string Id
-        {
-            get => this.id;
-            protected set => this.id = value;
-        }
-
-        public string FirstName
-        {
-            get => this.firstName;
-            set => this.firstName = value;
-        }
-
-        public string AddtnlNames
-        {
-            get => this.addtnlNames;
-            set => this.addtnlNames = value;
-        }
-
-        public string LastName
-        {
-            get => this.lastName;
-            set => this.lastName = value;
-        }
-
-        public DateTime DateOfBirth
-        {
-            get => this.dateOfBirth;
-            set => this.dateOfBirth = value;
-        }
-
-        public char Gender
-        {
-            get => this.gender;
-            set => this.gender = value;
-        }
-
-        public string Email
-        {
-            get => this.email;
-            set => this.email = value;
-        }
-
-        public string PhoneNumber
-        {
-            get => this.phoneNumber;
-            set => this.phoneNumber = value;
-        }
-
-        public string Password
-        {
-            get => this.password;
-            private set => this.password = value;
-        }
-
-        public bool IsCoach
-        {
-            get => this.isCoach;
-            set => this.isCoach = value;
-        }
-
-        public bool IsManager
-        {
-            get => this.isManager;
-            set => this.isManager = value;
-        }
-
-        public bool IsDoctor
-        {
-            get => this.isDoctor;
-            set => this.isDoctor = value;
-        }
-
-        public bool IsShooter
-        {
-            get => this.isShooter;
-            set => this.isShooter = value;
+            this.Id = id;
         }
     }
 }

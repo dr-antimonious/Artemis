@@ -6,7 +6,7 @@ namespace Artemis.Services
 {
     public static class UserExtension
     {
-        public static string GenerateId(this User user)
+        public static void GenerateId(this User user)
         {
             char[] userAsChars = (
                 user.FirstName
@@ -15,13 +15,12 @@ namespace Artemis.Services
                 + user.DateOfBirth.Date
                 + user.Gender
                 + user.Email
-                + user.PhoneNumber).ToCharArray();
-            byte[] userAsByte = Encoding.UTF8.GetBytes(userAsChars);
-            SHA512 sha512 = SHA512.Create();
-            byte[] hashedUserBytes = sha512.ComputeHash(userAsByte);
-            sha512.Dispose();
-            string id = Convert.ToHexString(hashedUserBytes);
-            user.Id = id;
+                + user.PhoneNumber
+                + user.IsCoach
+                + user.IsManager
+                + user.IsDoctor
+                + user.IsShooter).ToCharArray();
+            user.Id = Convert.ToHexString(SHA512.HashData(Encoding.UTF8.GetBytes(userAsChars)));
         }
     }
 }
