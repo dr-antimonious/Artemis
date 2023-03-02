@@ -21,6 +21,7 @@ namespace Artemis.Contracts.Entities
         public int ShotCount { get; set; } = default!;
 
         [Required]
+        [Range(1, 10)]
         public int Performance { get; set; } = default!;
 
         public Exercise()
