@@ -1,33 +1,39 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Artemis.Contracts.Entities
 {
     public class User : IdentityUser
     {
-        public string Id { get; set; } = default!;
-
+        [Required]
+        [PersonalData]
         public string FirstName { get; set; } = default!;
 
+        [PersonalData]
         public string AddtnlNames { get; set; } = default!;
 
+        [Required]
+        [PersonalData]
         public string LastName { get; set; } = default!;
 
+        [Required]
+        [PersonalData]
         public DateTime DateOfBirth { get; set; } = default!;
 
+        [Required]
+        [PersonalData]
         public char Gender { get; set; } = default!;
 
-        public string Email { get; set; } = default!;
-
-        public string PhoneNumber { get; set; } = default!;
-
-        public string Password { get; set; } = default!;
-
+        [Required]
         public bool IsCoach { get; set; } = default!;
 
+        [Required]
         public bool IsManager { get; set; } = default!;
 
+        [Required]
         public bool IsDoctor { get; set; } = default!;
 
+        [Required]
         public bool IsShooter { get; set; } = default!;
 
         public User()
@@ -42,7 +48,6 @@ namespace Artemis.Contracts.Entities
             char gender,
             string email,
             string phoneNumber,
-            string password,
             bool isCoach,
             bool isManager,
             bool isDoctor,
@@ -56,7 +61,6 @@ namespace Artemis.Contracts.Entities
             this.Gender = gender;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
-            this.Password = password;
             this.IsCoach = isCoach;
             this.IsManager = isManager;
             this.IsDoctor = isDoctor;
@@ -72,7 +76,6 @@ namespace Artemis.Contracts.Entities
             char gender,
             string email,
             string phoneNumber,
-            string password,
             bool isCoach,
             bool isManager,
             bool isDoctor,
@@ -85,7 +88,6 @@ namespace Artemis.Contracts.Entities
                 gender,
                 email,
                 phoneNumber,
-                password,
                 isCoach,
                 isManager,
                 isDoctor,
