@@ -9,5 +9,22 @@ namespace Artemis.Contracts.Entities
 
         [Required]
         public string Name { get; set; } = default!;
+
+        public Country()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public Country(string name)
+            : this()
+        {
+            this.Name = name;
+        }
+
+        public Country(string id, string name)
+            : this(name)
+        {
+            this.Id = id;
+        }
     }
 }

@@ -13,5 +13,28 @@ namespace Artemis.Contracts.Entities
 
         [ForeignKey("CountryId")]
         public Country Country { get; set; } = default!;
+
+        public Location()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public Location(City city, Country country)
+            : this()
+        {
+            this.City = city;
+            this.Country = country;
+        }
+
+        public Location(
+            string id,
+            City city,
+            Country country)
+            : this(city, country)
+        {
+            this.Id = id;
+            this.City = city;
+            this.Country = country;
+        }
     }
 }

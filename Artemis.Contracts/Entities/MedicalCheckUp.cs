@@ -22,5 +22,47 @@ namespace Artemis.Contracts.Entities
 
         [Required]
         public string Notes { get; set; } = default!;
+
+        public MedicalCheckUp()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public MedicalCheckUp(
+            User doctor,
+            User shooter,
+            Location location,
+            DateTime date,
+            string notes)
+            : this()
+        {
+            this.Doctor = doctor;
+            this.Shooter = shooter;
+            this.Location = location;
+            this.Date = date;
+            this.Notes = notes;
+        }
+
+        public MedicalCheckUp(
+            string id,
+            User doctor,
+            User shooter,
+            Location location,
+            DateTime date,
+            string notes)
+            : this(
+                doctor,
+                shooter,
+                location,
+                date,
+                notes)
+        {
+            this.Id = id;
+            this.Doctor = doctor;
+            this.Shooter = shooter;
+            this.Location = location;
+            this.Date = date;
+            this.Notes = notes;
+        }
     }
 }

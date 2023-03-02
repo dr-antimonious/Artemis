@@ -22,5 +22,42 @@ namespace Artemis.Contracts.Entities
 
         [Required]
         public string RegistrationNumber { get; set; } = default!;
+
+        public ShooterRegistration()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public ShooterRegistration(
+            Association association,
+            User shooter,
+            Country country,
+            DateTime date,
+            string registrationNumber)
+            : this()
+        {
+            this.Association = association;
+            this.Shooter = shooter;
+            this.Country = country;
+            this.Date = date;
+            this.RegistrationNumber = registrationNumber;
+        }
+
+        public ShooterRegistration(
+            string id,
+            Association association,
+            User shooter,
+            Country country,
+            DateTime date,
+            string registrationNumber)
+            : this(
+                association,
+                shooter,
+                country,
+                date,
+                registrationNumber)
+        {
+            this.Id = id;
+        }
     }
 }

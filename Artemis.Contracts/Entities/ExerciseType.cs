@@ -2,7 +2,7 @@
 
 namespace Artemis.Contracts.Entities
 {
-    public class City
+    public class ExerciseType
     {
         [Key]
         public string Id { get; set; } = default!;
@@ -10,19 +10,22 @@ namespace Artemis.Contracts.Entities
         [Required]
         public string Name { get; set; } = default!;
 
-        public City()
+        public string Description { get; set; } = default!;
+
+        public ExerciseType()
         {
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public City(string name)
+        public ExerciseType(string name, string description)
             : this()
         {
             this.Name = name;
+            this.Description = description;
         }
 
-        public City(string id, string name)
-            : this(name)
+        public ExerciseType(string id, string name, string description)
+            : this(name, description)
         {
             this.Id = id;
         }

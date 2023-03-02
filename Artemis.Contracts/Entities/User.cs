@@ -38,6 +38,7 @@ namespace Artemis.Contracts.Entities
 
         public User()
         {
+            this.Id = Guid.NewGuid().ToString();
         }
 
         public User(
