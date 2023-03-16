@@ -8,19 +8,23 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        [Required(ErrorMessage = "Doctor is required")]
         [ForeignKey("DoctorId")]
         public User Doctor { get; set; } = default!;
 
+        [Required(ErrorMessage = "Shooter is required")]
         [ForeignKey("ShooterId")]
         public User Shooter { get; set; } = default!;
 
+        [Required(ErrorMessage = "Location is required")]
         [ForeignKey("LocationId")]
         public Location Location { get; set; } = default!;
 
+        [Required(ErrorMessage = "Date is required")]
         [ForeignKey("DateId")]
         public DateTime Date { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Notes are required")]
         public string Notes { get; set; } = default!;
 
         public MedicalCheckUp()

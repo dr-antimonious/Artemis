@@ -5,35 +5,35 @@ namespace Artemis.Contracts.Entities
 {
     public class User : IdentityUser
     {
-        [Required]
+        [Required(ErrorMessage = "First name is required")]
         [PersonalData]
         public string FirstName { get; set; } = default!;
 
         [PersonalData]
         public string AddtnlNames { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required")]
         [PersonalData]
         public string LastName { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Date of birth is required")]
         [PersonalData]
         public DateTime DateOfBirth { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Gender is required")]
         [PersonalData]
         public char Gender { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Must define if the user is a coach")]
         public bool IsCoach { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Must define if the user is a manager")]
         public bool IsManager { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Must define if the user is a doctor")]
         public bool IsDoctor { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Must define if the user is a shooter")]
         public bool IsShooter { get; set; } = default!;
 
         public User()

@@ -8,9 +8,11 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        [Required(ErrorMessage = "Shooter is required")]
         [ForeignKey("ShooterId")]
         public User Shooter { get; set; } = default!;
 
+        [Required(ErrorMessage = "Date is required")]
         [ForeignKey("DateId")]
         public DateTime Date { get; set; } = default!;
 

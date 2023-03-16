@@ -8,9 +8,11 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        [Required(ErrorMessage = "City is required")]
         [ForeignKey("CityId")]
         public City City { get; set; } = default!;
 
+        [Required(ErrorMessage = "Country is required")]
         [ForeignKey("CountryId")]
         public Country Country { get; set; } = default!;
 

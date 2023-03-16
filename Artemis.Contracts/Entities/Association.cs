@@ -8,19 +8,20 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = default!;
 
+        [Required(ErrorMessage = "Location is required")]
         [ForeignKey("LocationId")]
         public Location Location { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Phone number is required")]
         public string PhoneNumber { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Color is required")]
         public string Color { get; set; } = default!;
 
         public Association()

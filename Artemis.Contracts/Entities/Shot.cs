@@ -5,23 +5,26 @@ namespace Artemis.Contracts.Entities
 {
     public class Shot
     {
+        [Required(ErrorMessage = "Shot must belong to an event")]
         [ForeignKey("EventId")]
         public Event Event { get; set; } = default!;
 
-        [Required]
-        public int Number { get; set; } = default!;
+        [Required(ErrorMessage = "Number of shot is required")]
+        [Range(1, ushort.MaxValue)]
+        public ushort Number { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Timestamp is required")]
         public DateTime TimeStamp { get; set; } = default!;
 
-        [Required]
-        public double Decimal { get; set; } = default!;
+        [Required(ErrorMessage = "Decimal value is required")]
+        [Range(0.0f, 10.9f)]
+        public float Decimal { get; set; } = default!;
 
-        [Required]
-        public double HorizontalDisplacement { get; set; } = default!;
+        [Required(ErrorMessage = "Horizontal displacement is required")]
+        public float HorizontalDisplacement { get; set; } = default!;
 
-        [Required]
-        public double VerticalDisplacement { get; set; } = default!;
+        [Required(ErrorMessage = "Vertical displacement is required")]
+        public float VerticalDisplacement { get; set; } = default!;
 
         public Shot()
         {
@@ -29,11 +32,11 @@ namespace Artemis.Contracts.Entities
 
         public Shot(
             Event shotEvent,
-            int number,
+            ushort number,
             DateTime timeStamp,
-            double result,
-            double horizontalDisplacement,
-            double verticalDisplacement)
+            float result,
+            float horizontalDisplacement,
+            float verticalDisplacement)
             : this()
         {
             this.Event = shotEvent;

@@ -8,21 +8,25 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        [Required(ErrorMessage = "Training is required")]
         [ForeignKey("TrainingId")]
         public Event Training { get; set; } = default!;
 
+        [Required(ErrorMessage = "Type is required")]
         [ForeignKey("TypeId")]
         public ExerciseType Type { get; set; } = default!;
 
-        [Required]
-        public int DryShotCount { get; set; } = default!;
+        [Required(ErrorMessage = "Dry shot count is required")]
+        [Range(ushort.MinValue, ushort.MaxValue)]
+        public ushort DryShotCount { get; set; } = default!;
 
-        [Required]
-        public int ShotCount { get; set; } = default!;
+        [Required(ErrorMessage = "Shot count is required")]
+        [Range(ushort.MinValue, ushort.MaxValue)]
+        public ushort ShotCount { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Performance is required")]
         [Range(1, 10)]
-        public int Performance { get; set; } = default!;
+        public byte Performance { get; set; } = default!;
 
         public Exercise()
         {
@@ -32,9 +36,9 @@ namespace Artemis.Contracts.Entities
         public Exercise(
             Event training,
             ExerciseType type,
-            int dryShotCount,
-            int shotCount,
-            int performance)
+            ushort dryShotCount,
+            ushort shotCount,
+            byte performance)
             : this()
         {
             this.Training = training;
@@ -48,9 +52,9 @@ namespace Artemis.Contracts.Entities
             string id,
             Event training,
             ExerciseType type,
-            int dryShotCount,
-            int shotCount,
-            int performance)
+            ushort dryShotCount,
+            ushort shotCount,
+            byte performance)
             : this(
                 training,
                 type,

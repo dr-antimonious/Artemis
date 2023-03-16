@@ -8,19 +8,23 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        [Required(ErrorMessage = "Association is required")]
         [ForeignKey("AssociationId")]
         public Association Association { get; set; } = default!;
 
+        [Required(ErrorMessage = "Shooter is required")]
         [ForeignKey("ShooterId")]
         public User Shooter { get; set; } = default!;
 
+        [Required(ErrorMessage = "Country is required")]
         [ForeignKey("CountryId")]
         public Country Country { get; set; } = default!;
 
+        [Required(ErrorMessage = "Date is required")]
         [ForeignKey("DateId")]
         public DateTime Date { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Registration number is required")]
         public string RegistrationNumber { get; set; } = default!;
 
         public ShooterRegistration()

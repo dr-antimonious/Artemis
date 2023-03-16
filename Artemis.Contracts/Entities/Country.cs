@@ -7,7 +7,7 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = default!;
 
         public Country()
