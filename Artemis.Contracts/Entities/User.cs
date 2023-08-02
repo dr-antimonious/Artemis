@@ -24,18 +24,6 @@ namespace Artemis.Contracts.Entities
         [PersonalData]
         public char Gender { get; set; } = default!;
 
-        [Required]
-        public bool IsCoach { get; set; } = default!;
-
-        [Required]
-        public bool IsManager { get; set; } = default!;
-
-        [Required]
-        public bool IsDoctor { get; set; } = default!;
-
-        [Required]
-        public bool IsShooter { get; set; } = default!;
-
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
@@ -48,11 +36,7 @@ namespace Artemis.Contracts.Entities
             DateTime dateOfBirth,
             char gender,
             string email,
-            string phoneNumber,
-            bool isCoach,
-            bool isManager,
-            bool isDoctor,
-            bool isShooter)
+            string phoneNumber)
             : this()
         {
             this.FirstName = firstName;
@@ -62,10 +46,6 @@ namespace Artemis.Contracts.Entities
             this.Gender = gender;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
-            this.IsCoach = isCoach;
-            this.IsManager = isManager;
-            this.IsDoctor = isDoctor;
-            this.IsShooter = isShooter;
         }
 
         public User(
@@ -76,11 +56,7 @@ namespace Artemis.Contracts.Entities
             DateTime dateOfBirth,
             char gender,
             string email,
-            string phoneNumber,
-            bool isCoach,
-            bool isManager,
-            bool isDoctor,
-            bool isShooter)
+            string phoneNumber)
             : this(
                 firstName,
                 addtnlNames,
@@ -88,11 +64,7 @@ namespace Artemis.Contracts.Entities
                 dateOfBirth,
                 gender,
                 email,
-                phoneNumber,
-                isCoach,
-                isManager,
-                isDoctor,
-                isShooter)
+                phoneNumber)
         {
             this.Id = id;
         }

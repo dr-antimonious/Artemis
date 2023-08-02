@@ -8,6 +8,8 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; } = default!;
 
+        public string Name { get; set; } = default!;
+
         [ForeignKey("CityId")]
         public City City { get; set; } = default!;
 
@@ -19,20 +21,26 @@ namespace Artemis.Contracts.Entities
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public Location(City city, Country country)
+        public Location(string name, City city, Country country)
             : this()
         {
+            this.Name = name;
             this.City = city;
             this.Country = country;
         }
 
         public Location(
             string id,
+            string name,
             City city,
             Country country)
-            : this(city, country)
+            : this(
+                name,
+                city,
+                country)
         {
             this.Id = id;
+            this.Name = name;
             this.City = city;
             this.Country = country;
         }
