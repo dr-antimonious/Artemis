@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities
     public class City
     {
         [Key]
-        public string Id { get; set; } = default!;
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = default!;

@@ -10,7 +10,7 @@ namespace Artemis.Contracts.Entities
         public string FirstName { get; set; } = default!;
 
         [PersonalData]
-        public string AddtnlNames { get; set; } = default!;
+        public string AdditionalNames { get; set; } = default!;
 
         [Required]
         [PersonalData]
@@ -31,7 +31,7 @@ namespace Artemis.Contracts.Entities
 
         public User(
             string firstName,
-            string addtnlNames,
+            string additionalNames,
             string lastName,
             DateTime dateOfBirth,
             char gender,
@@ -40,7 +40,7 @@ namespace Artemis.Contracts.Entities
             : this()
         {
             this.FirstName = firstName;
-            this.AddtnlNames = addtnlNames;
+            this.AdditionalNames = additionalNames;
             this.LastName = lastName;
             this.DateOfBirth = dateOfBirth;
             this.Gender = gender;
@@ -51,22 +51,21 @@ namespace Artemis.Contracts.Entities
         public User(
             string id,
             string firstName,
-            string addtnlNames,
+            string additionalNames,
             string lastName,
             DateTime dateOfBirth,
             char gender,
             string email,
             string phoneNumber)
-            : this(
-                firstName,
-                addtnlNames,
-                lastName,
-                dateOfBirth,
-                gender,
-                email,
-                phoneNumber)
         {
             this.Id = id;
+            this.FirstName = firstName;
+            this.AdditionalNames = additionalNames;
+            this.LastName = lastName;
+            this.DateOfBirth = dateOfBirth;
+            this.Gender = gender;
+            this.Email = email;
+            this.PhoneNumber = phoneNumber;
         }
     }
 }

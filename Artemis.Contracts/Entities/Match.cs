@@ -3,54 +3,66 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Artemis.Contracts.Entities
 {
-    public class Match
+    public abstract class Match : IMatch
     {
+        protected const int ShotsInSeries = 10;
+
+        protected IMatchManager Manager = default!;
+
+        protected List<IShot> Shots;
+
         [Key]
-        public string Id { get; set; } = default!;
+        public string Id { get; set; }
 
         [ForeignKey("ShooterId")]
         public User Shooter { get; set; } = default!;
 
         [ForeignKey("StartTimestampId")]
-        public DateTime StartTimestamp { get; set; } = default!;
+        public DateTime StartTimestamp { get; set; }
 
         [ForeignKey("EndTimestampId")]
-        public DateTime EndTimestamp { get; set; } = default!;
+        public DateTime EndTimestamp { get; set; }
 
         [ForeignKey("LocationId")]
         public Location Location { get; set; } = default!;
 
-        public double AirTemperature { get; set; } = default!;
+        public double? AirTemperature { get; set; }
 
-        public double AirPressure { get; set; } = default!;
+        public double? AirPressure { get; set; }
 
-        public double WindSpeed { get; set; } = default!;
+        public double? WindSpeed { get; set; }
 
-        public int WindDirection { get; set; } = default!;
+        public int? WindDirection { get; set; }
 
-        public string EnvironmentNotes { get; set; } = default!;
+        public string? EnvironmentNotes { get; set; }
 
-        public string EquipmentNotes { get; set; } = default!;
+        public string? EquipmentNotes { get; set; }
 
-        public string ShooterNotes { get; set; } = default!;
+        public string? ShooterNotes { get; set; }
 
-        public Match()
+        protected void InstantiateManager()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Manager = _3P50MatchManager.Instance;
         }
 
-        public Match(
+        protected Match()
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.Shots = new();
+        }
+
+        protected Match(
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
             Location location,
-            double airTemperature,
-            double airPressure,
-            double windSpeed,
-            int windDirection,
-            string environmentNotes,
-            string equipmentNotes,
-            string shooterNotes)
+            double? airTemperature = null,
+            double? airPressure = null,
+            double? windSpeed = null,
+            int? windDirection = null,
+            string? environmentNotes = null,
+            string? equipmentNotes = null,
+            string? shooterNotes = null)
             : this()
         {
             this.Shooter = shooter;
@@ -66,33 +78,33 @@ namespace Artemis.Contracts.Entities
             this.ShooterNotes = shooterNotes;
         }
 
-        public Match(
+        protected Match(
             string id,
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
             Location location,
-            double airTemperature,
-            double airPressure,
-            double windSpeed,
-            int windDirection,
-            string environmentNotes,
-            string equipmentNotes,
-            string shooterNotes)
-            : this(
-                shooter,
-                startTimestamp,
-                endTimestamp,
-                location,
-                airTemperature,
-                airPressure,
-                windSpeed,
-                windDirection,
-                environmentNotes,
-                equipmentNotes,
-                shooterNotes)
+            double? airTemperature = null,
+            double? airPressure = null,
+            double? windSpeed = null,
+            int? windDirection = null,
+            string? environmentNotes = null,
+            string? equipmentNotes = null,
+            string? shooterNotes = null)
         {
             this.Id = id;
+            this.Shooter = shooter;
+            this.StartTimestamp = startTimestamp;
+            this.EndTimestamp = endTimestamp;
+            this.Location = location;
+            this.AirTemperature = airTemperature;
+            this.AirPressure = airPressure;
+            this.WindSpeed = windSpeed;
+            this.WindDirection = windDirection;
+            this.EnvironmentNotes = environmentNotes;
+            this.EquipmentNotes = equipmentNotes;
+            this.ShooterNotes = shooterNotes;
+            this.Shots = new();
         }
     }
 }

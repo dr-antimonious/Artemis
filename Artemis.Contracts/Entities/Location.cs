@@ -6,7 +6,7 @@ namespace Artemis.Contracts.Entities
     public class Location
     {
         [Key]
-        public string Id { get; set; } = default!;
+        public string Id { get; set; }
 
         public string Name { get; set; } = default!;
 
