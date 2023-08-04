@@ -2,6 +2,10 @@
 {
     public class TSMatch : Match
     {
+        protected new const int ShotsInSeries = 25;
+
+        protected new const int SeriesInPhase = 5;
+
         private new void InstantiateManager()
         {
             Manager = TSMatchManager.Instance;

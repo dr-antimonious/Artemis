@@ -1,7 +1,11 @@
 ﻿namespace Artemis.Contracts.Entities
 {
-    public class _3P50Match : Match
+    public class _3P50Match : PhasedBullseyeMatch
     {
+        protected new const int PhasesInMatch = 3;
+
+        protected new const int SeriesInPhase = 4;
+
         public _3P50Match() : base()
         {
             InstantiateManager();

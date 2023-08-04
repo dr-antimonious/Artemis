@@ -1,6 +1,6 @@
 ﻿namespace Artemis.Contracts.Entities
 {
-    public class AP10Match : Match
+    public class AP10Match : BullseyeMatch
     {
         private new void InstantiateManager()
         {

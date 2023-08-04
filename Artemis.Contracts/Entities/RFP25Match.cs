@@ -1,6 +1,6 @@
 ﻿namespace Artemis.Contracts.Entities
 {
-    public class RFP25Match : Match
+    public class RFP25Match : PhasedBullseyeMatch
     {
         private new void InstantiateManager()
         {
