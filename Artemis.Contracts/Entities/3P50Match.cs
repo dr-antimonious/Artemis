@@ -2,13 +2,14 @@
 {
     public class _3P50Match : PhasedBullseyeMatch
     {
-        protected new const int PhasesInMatch = 3;
+        protected override IMatchManager Manager => _3P50MatchManager.Instance;
 
-        protected new const int SeriesInPhase = 4;
+        protected override int PhasesInMatch => 3;
+
+        protected override int SeriesInPhase => 4;
 
         public _3P50Match() : base()
         {
-            InstantiateManager();
         }
 
         public _3P50Match(
@@ -36,7 +37,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
         }
 
         public _3P50Match(
@@ -58,7 +58,8 @@
                 shooter, 
                 startTimestamp, 
                 endTimestamp, 
-                location, 
+                location,
+                shots,
                 airTemperature, 
                 airPressure, 
                 windSpeed, 
@@ -67,8 +68,6 @@
                 equipmentNotes, 
                 shooterNotes)
         {
-            InstantiateManager();
-            this.Shots = shots;
         }
     }
 }

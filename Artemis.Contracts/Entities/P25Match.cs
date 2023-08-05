@@ -2,14 +2,10 @@
 {
     public class P25Match : PhasedBullseyeMatch
     {
-        private new void InstantiateManager()
-        {
-            Manager = P25MatchManager.Instance;
-        }
+        protected override IMatchManager Manager => P25MatchManager.Instance;
 
         public P25Match() : base()
         {
-            InstantiateManager();
         }
 
         public P25Match(
@@ -37,7 +33,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
         }
 
         public P25Match(
@@ -60,6 +55,7 @@
                 startTimestamp,
                 endTimestamp,
                 location,
+                shots,
                 airTemperature,
                 airPressure,
                 windSpeed,
@@ -68,8 +64,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
-            this.Shots = shots;
         }
     }
 }

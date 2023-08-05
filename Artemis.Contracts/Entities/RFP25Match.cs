@@ -2,14 +2,10 @@
 {
     public class RFP25Match : PhasedBullseyeMatch
     {
-        private new void InstantiateManager()
-        {
-            Manager = RFP25MatchManager.Instance;
-        }
+        protected override IMatchManager Manager => RFP25MatchManager.Instance;
 
         public RFP25Match() : base()
         {
-            InstantiateManager();
         }
 
         public RFP25Match(
@@ -37,7 +33,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
         }
 
         public RFP25Match(
@@ -60,6 +55,7 @@
                 startTimestamp,
                 endTimestamp,
                 location,
+                shots,
                 airTemperature,
                 airPressure,
                 windSpeed,
@@ -68,8 +64,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
-            this.Shots = shots;
         }
     }
 }

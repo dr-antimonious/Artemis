@@ -4,23 +4,23 @@ namespace Artemis.Contracts.Entities
 {
     public interface IMatch
     {
-        double GetNumberOfShotsInSeries();
+        int GetNumberOfShotsInSeries();
 
-        double GetNumberOfSeriesInPhase();
+        int GetNumberOfSeriesInPhase();
 
-        double GetNumberOfPhases();
+        int GetNumberOfPhases();
 
-        double GetNumberOfSeries();
+        int GetNumberOfSeries();
 
-        double GetNumberOfShotsInPhase();
+        int GetNumberOfShotsInPhase();
 
-        double GetNumberOfShots();
+        int GetNumberOfShots();
 
         IShot GetShotAt(int index);
 
         void AddShot(IShot shot);
 
-        void AddShots(List<IShot> shots);
+        void AddAllShots(List<IShot> shots);
 
         List<IShot> GetShotsOfSeries(int index);
 

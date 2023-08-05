@@ -2,18 +2,12 @@
 {
     public class TSMatch : Match
     {
-        protected new const int ShotsInSeries = 25;
+        protected override int ShotsInSeries => 25;
 
-        protected new const int SeriesInPhase = 5;
-
-        private new void InstantiateManager()
-        {
-            Manager = TSMatchManager.Instance;
-        }
+        protected override int SeriesInPhase => 5;
 
         public TSMatch() : base()
         {
-            InstantiateManager();
         }
 
         public TSMatch(
@@ -41,7 +35,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
         }
 
         public TSMatch(
@@ -64,6 +57,7 @@
                 startTimestamp,
                 endTimestamp,
                 location,
+                shots,
                 airTemperature,
                 airPressure,
                 windSpeed,
@@ -72,8 +66,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
-            this.Shots = shots;
         }
     }
 }

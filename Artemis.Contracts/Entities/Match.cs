@@ -6,11 +6,7 @@ namespace Artemis.Contracts.Entities
 {
     public abstract class Match : IMatch
     {
-        protected const int ShotsInSeries = 10;
-
-        protected const int SeriesInPhase = 6;
-
-        protected IMatchManager Manager = default!;
+        protected virtual IMatchManager Manager => TSMatchManager.Instance;
 
         protected List<IShot> Shots;
 
@@ -43,49 +39,39 @@ namespace Artemis.Contracts.Entities
 
         public string? ShooterNotes { get; set; }
 
-        protected void InstantiateManager()
-        {
-            Manager = _3P50MatchManager.Instance;
-        }
+        protected virtual int ShotsInSeries => 10;
 
-        public double GetNumberOfShotsInSeries() => ShotsInSeries;
+        protected virtual int SeriesInPhase => 6;
 
-        public double GetNumberOfSeriesInPhase()
-        {
-            throw new NotSupportedException();
-        }
+        public int GetNumberOfShotsInSeries() => ShotsInSeries;
 
-        public double GetNumberOfPhases()
+        public virtual int GetNumberOfSeriesInPhase()
         {
             throw new NotSupportedException();
         }
 
-        public double GetNumberOfSeries()
+        public virtual int GetNumberOfPhases()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        public double GetNumberOfShotsInPhase()
+        public int GetNumberOfSeries() => SeriesInPhase;
+
+        public virtual int GetNumberOfShotsInPhase()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        public double GetNumberOfShots()
-        {
-            throw new NotImplementedException();
-        }
+        public int GetNumberOfShots() => ShotsInSeries * SeriesInPhase;
 
-        public IShot GetShotAt(int index)
-        {
-            throw new NotImplementedException();
-        }
+        public IShot GetShotAt(int index) => Shots[index];
 
         public void AddShot(IShot shot)
         {
             throw new NotImplementedException();
         }
 
-        public void AddShots(List<IShot> shots)
+        public void AddAllShots(List<IShot> shots)
         {
             throw new NotImplementedException();
         }
@@ -95,9 +81,9 @@ namespace Artemis.Contracts.Entities
             throw new NotImplementedException();
         }
 
-        public List<IShot> GetShotsOfPhase(int index)
+        public virtual List<IShot> GetShotsOfPhase(int index)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public ITuple GetSeriesResults(int index)
@@ -110,19 +96,19 @@ namespace Artemis.Contracts.Entities
             throw new NotImplementedException();
         }
 
-        public List<ITuple> GetSeriesResultsOfPhase(int index)
+        public virtual List<ITuple> GetSeriesResultsOfPhase(int index)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        public ITuple GetPhaseResults(int index)
+        public virtual ITuple GetPhaseResults(int index)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        public List<ITuple> GetAllPhaseResults()
+        public virtual List<ITuple> GetAllPhaseResults()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public ITuple GetMatchResult()
@@ -169,6 +155,7 @@ namespace Artemis.Contracts.Entities
             DateTime startTimestamp,
             DateTime endTimestamp,
             Location location,
+            List<IShot> shots,
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
@@ -189,7 +176,7 @@ namespace Artemis.Contracts.Entities
             this.EnvironmentNotes = environmentNotes;
             this.EquipmentNotes = equipmentNotes;
             this.ShooterNotes = shooterNotes;
-            this.Shots = new();
+            this.Shots = shots;
         }
     }
 }

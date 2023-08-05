@@ -2,14 +2,10 @@
 {
     public class AP10Match : BullseyeMatch
     {
-        private new void InstantiateManager()
-        {
-            Manager = AP10MatchManager.Instance;
-        }
+        protected override IMatchManager Manager => AP10MatchManager.Instance;
 
         public AP10Match() : base()
         {
-            InstantiateManager();
         }
 
         public AP10Match(
@@ -37,7 +33,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
         }
 
         public AP10Match(
@@ -60,6 +55,7 @@
                 startTimestamp,
                 endTimestamp,
                 location,
+                shots,
                 airTemperature,
                 airPressure,
                 windSpeed,
@@ -68,8 +64,6 @@
                 equipmentNotes,
                 shooterNotes)
         {
-            InstantiateManager();
-            this.Shots = shots;
         }
     }
 }
