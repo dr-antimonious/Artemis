@@ -1,14 +1,21 @@
-﻿namespace Artemis.Contracts.Entities
-{
-    public class AR10Match : BullseyeMatch
-    {
-        protected override IMatchManager Manager => AR10MatchManager.Instance;
+﻿using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Managers;
 
-        public AR10Match() : base()
+namespace Artemis.Contracts.Entities.Matches
+{
+    public class _3P50Match : PhasedBullseyeMatch
+    {
+        protected override IMatchManager Manager => _3P50MatchManager.Instance;
+
+        protected override int PhasesInMatch => 3;
+
+        protected override int SeriesInPhase => 4;
+
+        public _3P50Match() : base()
         {
         }
 
-        public AR10Match(
+        public _3P50Match(
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
@@ -35,7 +42,7 @@
         {
         }
 
-        public AR10Match(
+        public _3P50Match(
             string id,
             User shooter,
             DateTime startTimestamp,

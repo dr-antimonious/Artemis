@@ -1,16 +1,17 @@
-﻿namespace Artemis.Contracts.Entities
+﻿using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Managers;
+
+namespace Artemis.Contracts.Entities.Matches
 {
-    public class TSMatch : Match
+    public class AR10Match : BullseyeMatch
     {
-        protected override int ShotsInSeries => 25;
+        protected override IMatchManager Manager => AR10MatchManager.Instance;
 
-        protected override int SeriesInPhase => 5;
-
-        public TSMatch() : base()
+        public AR10Match() : base()
         {
         }
 
-        public TSMatch(
+        public AR10Match(
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
@@ -37,7 +38,7 @@
         {
         }
 
-        public TSMatch(
+        public AR10Match(
             string id,
             User shooter,
             DateTime startTimestamp,

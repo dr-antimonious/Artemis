@@ -1,4 +1,4 @@
-﻿namespace Artemis.Contracts.Entities
+﻿namespace Artemis.Contracts.Entities.Managers
 {
     public class _3P50MatchManager : MatchManager
     {

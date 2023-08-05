@@ -1,4 +1,4 @@
-﻿namespace Artemis.Contracts.Entities
+﻿namespace Artemis.Contracts.Entities.Managers
 {
     public class AP10MatchManager : MatchManager
     {

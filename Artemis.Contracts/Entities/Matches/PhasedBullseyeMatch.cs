@@ -1,4 +1,7 @@
-﻿namespace Artemis.Contracts.Entities
+﻿using System.Runtime.CompilerServices;
+using Artemis.Contracts.Entities.Interfaces;
+
+namespace Artemis.Contracts.Entities.Matches
 {
     public abstract class PhasedBullseyeMatch : BullseyeMatch
     {
@@ -18,8 +21,27 @@
 
         public override List<IShot> GetShotsOfPhase(int index)
             => new(Shots.GetRange(
-                SeriesInPhase * ShotsInSeries * index, 
+                SeriesInPhase * ShotsInSeries * index,
                 ShotsInSeries * SeriesInPhase));
+
+        public override List<ITuple> GetSeriesResultsOfPhase(int index)
+        {
+            List<ITuple> results = new();
+            for (int i = SeriesInPhase * index; i < SeriesInPhase * (index + 1); i++)
+                results.Add(GetSeriesResults(i));
+            return results;
+        }
+
+        public override ITuple GetPhaseResults(int index)
+            => Manager.GetPhaseResults(GetShotsOfPhase(index), index);
+
+        public override List<ITuple> GetAllPhaseResults()
+        {
+            List<ITuple> results = new();
+            for (int i = 0; i < PhasesInMatch; i++)
+                results.Add(GetPhaseResults(i));
+            return results;
+        }
 
         protected PhasedBullseyeMatch() : base()
         {

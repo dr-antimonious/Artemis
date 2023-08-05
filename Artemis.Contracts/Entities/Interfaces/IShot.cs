@@ -1,4 +1,4 @@
-﻿namespace Artemis.Contracts.Entities
+﻿namespace Artemis.Contracts.Entities.Interfaces
 {
     public interface IShot
     {
@@ -6,15 +6,15 @@
 
         void SetValue(double value);
 
-        double GetHorizontalDisplacement();
+        double? GetHorizontalDisplacement();
 
         void SetHorizontalDisplacement(double displacement);
 
-        double GetVerticalDisplacement();
+        double? GetVerticalDisplacement();
 
         void SetVerticalDisplacement(double displacement);
 
-        DateTime GetTimeStamp();
+        DateTime? GetTimeStamp();
 
         void SetTimeStamp(DateTime timeStamp);
     }

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Artemis.Contracts.Entities
+namespace Artemis.Contracts.Entities.Interfaces
 {
     public interface IMatch
     {
@@ -37,5 +37,7 @@ namespace Artemis.Contracts.Entities
         List<ITuple> GetAllPhaseResults();
 
         ITuple GetMatchResult();
+
+        int GetBullseyeCount();
     }
 }

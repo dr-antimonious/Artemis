@@ -1,4 +1,7 @@
-﻿namespace Artemis.Contracts.Entities
+﻿using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Managers;
+
+namespace Artemis.Contracts.Entities.Matches
 {
     public class P25Match : PhasedBullseyeMatch
     {

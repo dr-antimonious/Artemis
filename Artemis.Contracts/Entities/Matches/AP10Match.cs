@@ -1,14 +1,17 @@
-﻿namespace Artemis.Contracts.Entities
-{
-    public abstract class BullseyeMatch : Match
-    {
-        protected const double BullseyeMinimum = 10.4;
+﻿using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Managers;
 
-        protected BullseyeMatch() : base()
+namespace Artemis.Contracts.Entities.Matches
+{
+    public class AP10Match : BullseyeMatch
+    {
+        protected override IMatchManager Manager => AP10MatchManager.Instance;
+
+        public AP10Match() : base()
         {
         }
 
-        protected BullseyeMatch(
+        public AP10Match(
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
@@ -35,7 +38,7 @@
         {
         }
 
-        protected BullseyeMatch(
+        public AP10Match(
             string id,
             User shooter,
             DateTime startTimestamp,

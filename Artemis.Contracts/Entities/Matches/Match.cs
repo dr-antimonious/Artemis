@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Managers;
 
-namespace Artemis.Contracts.Entities
+namespace Artemis.Contracts.Entities.Matches
 {
     public abstract class Match : IMatch
     {
@@ -56,36 +58,32 @@ namespace Artemis.Contracts.Entities
         public virtual int GetNumberOfShotsInPhase()
             => throw new NotSupportedException();
 
-        public virtual int GetNumberOfShots() => ShotsInSeries * SeriesInPhase;
+        public virtual int GetNumberOfShots()
+            => ShotsInSeries * SeriesInPhase;
 
         public IShot GetShotAt(int index) => Shots[index];
 
-        public void AddShot(IShot shot)
-        {
-            throw new NotImplementedException();
-        }
+        public void AddShot(IShot shot) => Shots.Add(shot);
 
-        public void AddAllShots(List<IShot> shots)
-        {
-            throw new NotImplementedException();
-        }
+        public void AddAllShots(List<IShot> shots) => Shots = shots;
 
-        public List<IShot> GetShotsOfSeries(int index) 
+        public List<IShot> GetShotsOfSeries(int index)
             => new(Shots.GetRange(
-                ShotsInSeries * index, 
+                ShotsInSeries * index,
                 ShotsInSeries));
 
         public virtual List<IShot> GetShotsOfPhase(int index)
             => throw new NotSupportedException();
 
-        public virtual ITuple GetSeriesResults(int index)
-        {
-            throw new NotImplementedException();
-        }
+        public ITuple GetSeriesResults(int index)
+            => Manager.GetSeriesResults(GetShotsOfSeries(index), index);
 
-        public virtual List<ITuple> GetAllSeriesResults()
+        public List<ITuple> GetAllSeriesResults()
         {
-            throw new NotImplementedException();
+            List<ITuple> results = new();
+            for (int i = 0; i < Shots.Count / ShotsInSeries; i++)
+                results.Add(GetSeriesResults(i));
+            return results;
         }
 
         public virtual List<ITuple> GetSeriesResultsOfPhase(int index)
@@ -98,14 +96,15 @@ namespace Artemis.Contracts.Entities
             => throw new NotSupportedException();
 
         public ITuple GetMatchResult()
-        {
-            throw new NotImplementedException();
-        }
+            => Manager.GetMatchResult(Shots);
+
+        public virtual int GetBullseyeCount()
+            => throw new NotSupportedException();
 
         protected Match()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Shots = new();
+            Id = Guid.NewGuid().ToString();
+            Shots = new();
         }
 
         protected Match(
@@ -122,17 +121,17 @@ namespace Artemis.Contracts.Entities
             string? shooterNotes = null)
             : this()
         {
-            this.Shooter = shooter;
-            this.StartTimestamp = startTimestamp;
-            this.EndTimestamp = endTimestamp;
-            this.Location = location;
-            this.AirTemperature = airTemperature;
-            this.AirPressure = airPressure;
-            this.WindSpeed = windSpeed;
-            this.WindDirection = windDirection;
-            this.EnvironmentNotes = environmentNotes;
-            this.EquipmentNotes = equipmentNotes;
-            this.ShooterNotes = shooterNotes;
+            Shooter = shooter;
+            StartTimestamp = startTimestamp;
+            EndTimestamp = endTimestamp;
+            Location = location;
+            AirTemperature = airTemperature;
+            AirPressure = airPressure;
+            WindSpeed = windSpeed;
+            WindDirection = windDirection;
+            EnvironmentNotes = environmentNotes;
+            EquipmentNotes = equipmentNotes;
+            ShooterNotes = shooterNotes;
         }
 
         protected Match(
@@ -150,19 +149,19 @@ namespace Artemis.Contracts.Entities
             string? equipmentNotes = null,
             string? shooterNotes = null)
         {
-            this.Id = id;
-            this.Shooter = shooter;
-            this.StartTimestamp = startTimestamp;
-            this.EndTimestamp = endTimestamp;
-            this.Location = location;
-            this.AirTemperature = airTemperature;
-            this.AirPressure = airPressure;
-            this.WindSpeed = windSpeed;
-            this.WindDirection = windDirection;
-            this.EnvironmentNotes = environmentNotes;
-            this.EquipmentNotes = equipmentNotes;
-            this.ShooterNotes = shooterNotes;
-            this.Shots = shots;
+            Id = id;
+            Shooter = shooter;
+            StartTimestamp = startTimestamp;
+            EndTimestamp = endTimestamp;
+            Location = location;
+            AirTemperature = airTemperature;
+            AirPressure = airPressure;
+            WindSpeed = windSpeed;
+            WindDirection = windDirection;
+            EnvironmentNotes = environmentNotes;
+            EquipmentNotes = equipmentNotes;
+            ShooterNotes = shooterNotes;
+            Shots = shots;
         }
     }
 }

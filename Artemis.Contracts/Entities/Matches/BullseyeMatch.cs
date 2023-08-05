@@ -1,18 +1,19 @@
-﻿namespace Artemis.Contracts.Entities
+﻿using Artemis.Contracts.Entities.Interfaces;
+
+namespace Artemis.Contracts.Entities.Matches
 {
-    public class _3P50Match : PhasedBullseyeMatch
+    public abstract class BullseyeMatch : Match
     {
-        protected override IMatchManager Manager => _3P50MatchManager.Instance;
+        public const double BullseyeMinimum = 10.4;
 
-        protected override int PhasesInMatch => 3;
+        public override int GetBullseyeCount()
+            => Shots.Count(x => x.GetValue() >= BullseyeMinimum);
 
-        protected override int SeriesInPhase => 4;
-
-        public _3P50Match() : base()
+        protected BullseyeMatch() : base()
         {
         }
 
-        public _3P50Match(
+        protected BullseyeMatch(
             User shooter,
             DateTime startTimestamp,
             DateTime endTimestamp,
@@ -39,7 +40,7 @@
         {
         }
 
-        public _3P50Match(
+        protected BullseyeMatch(
             string id,
             User shooter,
             DateTime startTimestamp,
@@ -54,18 +55,18 @@
             string? equipmentNotes = null,
             string? shooterNotes = null)
             : base(
-                id, 
-                shooter, 
-                startTimestamp, 
-                endTimestamp, 
+                id,
+                shooter,
+                startTimestamp,
+                endTimestamp,
                 location,
                 shots,
-                airTemperature, 
-                airPressure, 
-                windSpeed, 
-                windDirection, 
-                environmentNotes, 
-                equipmentNotes, 
+                airTemperature,
+                airPressure,
+                windSpeed,
+                windDirection,
+                environmentNotes,
+                equipmentNotes,
                 shooterNotes)
         {
         }

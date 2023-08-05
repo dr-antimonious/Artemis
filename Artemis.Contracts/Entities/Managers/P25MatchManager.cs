@@ -1,4 +1,4 @@
-﻿namespace Artemis.Contracts.Entities
+﻿namespace Artemis.Contracts.Entities.Managers
 {
     public class P25MatchManager : MatchManager
     {
