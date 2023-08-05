@@ -46,23 +46,17 @@ namespace Artemis.Contracts.Entities
         public int GetNumberOfShotsInSeries() => ShotsInSeries;
 
         public virtual int GetNumberOfSeriesInPhase()
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
         public virtual int GetNumberOfPhases()
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
-        public int GetNumberOfSeries() => SeriesInPhase;
+        public virtual int GetNumberOfSeries() => SeriesInPhase;
 
         public virtual int GetNumberOfShotsInPhase()
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
-        public int GetNumberOfShots() => ShotsInSeries * SeriesInPhase;
+        public virtual int GetNumberOfShots() => ShotsInSeries * SeriesInPhase;
 
         public IShot GetShotAt(int index) => Shots[index];
 
@@ -76,40 +70,32 @@ namespace Artemis.Contracts.Entities
             throw new NotImplementedException();
         }
 
-        public List<IShot> GetShotsOfSeries(int index)
-        {
-            throw new NotImplementedException();
-        }
+        public List<IShot> GetShotsOfSeries(int index) 
+            => new(Shots.GetRange(
+                ShotsInSeries * index, 
+                ShotsInSeries));
 
         public virtual List<IShot> GetShotsOfPhase(int index)
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
-        public ITuple GetSeriesResults(int index)
+        public virtual ITuple GetSeriesResults(int index)
         {
             throw new NotImplementedException();
         }
 
-        public List<ITuple> GetAllSeriesResults()
+        public virtual List<ITuple> GetAllSeriesResults()
         {
             throw new NotImplementedException();
         }
 
         public virtual List<ITuple> GetSeriesResultsOfPhase(int index)
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
         public virtual ITuple GetPhaseResults(int index)
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
         public virtual List<ITuple> GetAllPhaseResults()
-        {
-            throw new NotSupportedException();
-        }
+            => throw new NotSupportedException();
 
         public ITuple GetMatchResult()
         {

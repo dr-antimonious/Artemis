@@ -4,10 +4,10 @@ namespace Artemis.Contracts.Entities
 {
     public class BasicShot : IShot
     {
-        private DateTime _timeStamp = default!;
+        protected DateTime _timeStamp = default!;
 
         [Required]
-        private double _value = default!;
+        protected double _value = default!;
 
         public BasicShot()
         {
@@ -26,25 +26,17 @@ namespace Artemis.Contracts.Entities
 
         public void SetValue(double value) => this._value = value;
 
-        public double GetHorizontalDisplacement()
-        {
-            throw new NotSupportedException();
-        }
+        public virtual double GetHorizontalDisplacement()
+            => throw new NotSupportedException();
 
-        public void SetHorizontalDisplacement(double displacement)
-        {
-            throw new NotSupportedException();
-        }
+        public virtual void SetHorizontalDisplacement(double displacement)
+            => throw new NotSupportedException();
 
-        public double GetVerticalDisplacement()
-        {
-            throw new NotSupportedException();
-        }
+        public virtual double GetVerticalDisplacement()
+            => throw new NotSupportedException();
 
-        public void SetVerticalDisplacement(double displacement)
-        {
-            throw new NotSupportedException();
-        }
+        public virtual void SetVerticalDisplacement(double displacement)
+            => throw new NotSupportedException();
 
         public DateTime GetTimeStamp() => this._timeStamp;
 

@@ -6,6 +6,21 @@
 
         protected virtual int PhasesInMatch => 2;
 
+        public override int GetNumberOfSeriesInPhase() => SeriesInPhase;
+
+        public override int GetNumberOfPhases() => PhasesInMatch;
+
+        public override int GetNumberOfSeries() => SeriesInPhase * PhasesInMatch;
+
+        public override int GetNumberOfShotsInPhase() => ShotsInSeries * SeriesInPhase;
+
+        public override int GetNumberOfShots() => ShotsInSeries * SeriesInPhase * PhasesInMatch;
+
+        public override List<IShot> GetShotsOfPhase(int index)
+            => new(Shots.GetRange(
+                SeriesInPhase * ShotsInSeries * index, 
+                ShotsInSeries * SeriesInPhase));
+
         protected PhasedBullseyeMatch() : base()
         {
         }

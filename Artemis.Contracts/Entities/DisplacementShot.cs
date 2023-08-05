@@ -23,14 +23,14 @@
             this._verticalDisplacement = verticalDisplacement;
         }
 
-        public new double GetHorizontalDisplacement() => this._horizontalDisplacement;
+        public override double GetHorizontalDisplacement() => this._horizontalDisplacement;
 
-        public new void SetHorizontalDisplacement(double horizontalDisplacement)
+        public override void SetHorizontalDisplacement(double horizontalDisplacement)
             => this._horizontalDisplacement = horizontalDisplacement;
 
-        public new double GetVerticalDisplacement() => this._verticalDisplacement;
+        public override double GetVerticalDisplacement() => this._verticalDisplacement;
 
-        public new void SetVerticalDisplacement(double verticalDisplacement)
+        public override void SetVerticalDisplacement(double verticalDisplacement)
             => this._verticalDisplacement = verticalDisplacement;
     }
 }
