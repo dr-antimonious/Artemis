@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities.Matches
 {
     public class AR10Match : BullseyeMatch
     {
-        protected override IMatchManager Manager => AR10MatchManager.Instance;
+        protected override IMatchManager Manager => DecimalMatchManager.Instance;
 
         public AR10Match() : base()
         {

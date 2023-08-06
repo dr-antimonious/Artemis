@@ -63,6 +63,8 @@ namespace Artemis.Contracts.Entities.Matches
 
         public IShot GetShotAt(int index) => Shots[index];
 
+        public List<IShot> GetAllShots() => new(Shots);
+
         public void AddShot(IShot shot) => Shots.Add(shot);
 
         public void AddAllShots(List<IShot> shots) => Shots = shots;
@@ -76,12 +78,12 @@ namespace Artemis.Contracts.Entities.Matches
             => throw new NotSupportedException();
 
         public ITuple GetSeriesResults(int index)
-            => Manager.GetSeriesResults(GetShotsOfSeries(index), index);
+            => Manager.GetSeriesResults(this, index);
 
         public List<ITuple> GetAllSeriesResults()
         {
             List<ITuple> results = new();
-            for (int i = 0; i < Shots.Count / ShotsInSeries; i++)
+            for (int i = 0; i < GetNumberOfShots() / ShotsInSeries; i++)
                 results.Add(GetSeriesResults(i));
             return results;
         }
@@ -96,9 +98,12 @@ namespace Artemis.Contracts.Entities.Matches
             => throw new NotSupportedException();
 
         public ITuple GetMatchResult()
-            => Manager.GetMatchResult(Shots);
+            => Manager.GetMatchResult(this);
 
-        public virtual int GetBullseyeCount()
+        public virtual int GetTotalBullseyeCount()
+            => throw new NotSupportedException();
+
+        public virtual int GetBullseyeCountOfShots(List<IShot> shots)
             => throw new NotSupportedException();
 
         protected Match()

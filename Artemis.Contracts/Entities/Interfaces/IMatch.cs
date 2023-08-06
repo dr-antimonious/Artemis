@@ -18,6 +18,8 @@ namespace Artemis.Contracts.Entities.Interfaces
 
         IShot GetShotAt(int index);
 
+        List<IShot> GetAllShots();
+
         void AddShot(IShot shot);
 
         void AddAllShots(List<IShot> shots);
@@ -38,6 +40,8 @@ namespace Artemis.Contracts.Entities.Interfaces
 
         ITuple GetMatchResult();
 
-        int GetBullseyeCount();
+        int GetTotalBullseyeCount();
+
+        int GetBullseyeCountOfShots(List<IShot> shots);
     }
 }

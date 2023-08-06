@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities.Matches
 {
     public class AP10Match : BullseyeMatch
     {
-        protected override IMatchManager Manager => AP10MatchManager.Instance;
+        protected override IMatchManager Manager => IntegerMatchManager.Instance;
 
         public AP10Match() : base()
         {

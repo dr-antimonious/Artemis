@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities.Matches
 {
     public class _3P50Match : PhasedBullseyeMatch
     {
-        protected override IMatchManager Manager => _3P50MatchManager.Instance;
+        protected override IMatchManager Manager => DecimalMatchManager.Instance;
 
         protected override int PhasesInMatch => 3;
 

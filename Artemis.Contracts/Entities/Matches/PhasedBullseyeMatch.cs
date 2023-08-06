@@ -33,7 +33,7 @@ namespace Artemis.Contracts.Entities.Matches
         }
 
         public override ITuple GetPhaseResults(int index)
-            => Manager.GetPhaseResults(GetShotsOfPhase(index), index);
+            => Manager.GetPhaseResults(this, index);
 
         public override List<ITuple> GetAllPhaseResults()
         {

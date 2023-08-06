@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities.Matches
 {
     public class P25Match : PhasedBullseyeMatch
     {
-        protected override IMatchManager Manager => P25MatchManager.Instance;
+        protected override IMatchManager Manager => IntegerMatchManager.Instance;
 
         public P25Match() : base()
         {

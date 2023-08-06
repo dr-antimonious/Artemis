@@ -1,36 +1,31 @@
 ﻿using System.Runtime.CompilerServices;
 using Artemis.Contracts.Entities.Interfaces;
-using Artemis.Contracts.Entities.Matches;
 
 namespace Artemis.Contracts.Entities.Managers
 {
     public abstract class MatchManager : IMatchManager
     {
-        protected static int GetBullseyeCount(List<IShot> shots)
-            => shots.Count(x => x.GetValue() >= BullseyeMatch.BullseyeMinimum);
+        protected static double DecimalSeries(List<IShot> shots)
+            => shots.Sum(x => x.GetValue());
 
-        protected static ITuple DecimalSeries(List<IShot> shots)
-            => (shots.Sum(x => x.GetValue()),
-                GetBullseyeCount(shots));
+        protected static int IntegerSeries(List<IShot> shots)
+            => shots.Sum(x => (int)Math.Floor(x.GetValue()));
 
-        protected static ITuple IntegerSeries(List<IShot> shots)
-            => (shots.Sum(x => (int)Math.Floor(x.GetValue())),
-                GetBullseyeCount(shots));
+        private static ITuple GetMultipleSeriesResult(List<ITuple> results)
+            => new Tuple<List<ITuple>, int?, double?, int?>(
+                results,
+                results.Sum(x => (int?) x[0]),
+                results.Sum(x => (double?) x[1]),
+                results.Sum(x => (int?) x[2]));
 
-        public virtual ITuple GetMatchResult(List<IShot> shots)
-        {
-            throw new NotImplementedException();
-        }
+        public ITuple GetMatchResult(IMatch match)
+            => GetMultipleSeriesResult(match.GetAllSeriesResults());
 
-        public virtual ITuple GetSeriesResults(List<IShot> shots, int index)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual ITuple GetSeriesResults(IMatch match, int index)
+            => throw new NotSupportedException();
 
-        public virtual ITuple GetPhaseResults(List<IShot> shots, int index)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual ITuple GetPhaseResults(IMatch match, int index)
+            => GetMultipleSeriesResult(match.GetSeriesResultsOfPhase(index));
 
         protected MatchManager()
         {

@@ -6,8 +6,11 @@ namespace Artemis.Contracts.Entities.Matches
     {
         public const double BullseyeMinimum = 10.4;
 
-        public override int GetBullseyeCount()
+        public override int GetTotalBullseyeCount()
             => Shots.Count(x => x.GetValue() >= BullseyeMinimum);
+
+        public override int GetBullseyeCountOfShots(List<IShot> shots)
+            => shots.Count(x => x.GetValue() >= BullseyeMinimum);
 
         protected BullseyeMatch() : base()
         {

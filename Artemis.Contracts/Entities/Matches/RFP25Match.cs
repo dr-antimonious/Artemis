@@ -5,7 +5,7 @@ namespace Artemis.Contracts.Entities.Matches
 {
     public class RFP25Match : PhasedBullseyeMatch
     {
-        protected override IMatchManager Manager => RFP25MatchManager.Instance;
+        protected override IMatchManager Manager => IntegerMatchManager.Instance;
 
         public RFP25Match() : base()
         {

@@ -4,10 +4,10 @@ namespace Artemis.Contracts.Entities.Interfaces
 {
     public interface IMatchManager
     {
-        ITuple GetSeriesResults(List<IShot> shots, int index);
+        ITuple GetSeriesResults(IMatch match, int index);
 
-        ITuple GetPhaseResults(List<IShot> shots, int index);
+        ITuple GetPhaseResults(IMatch match, int index);
 
-        ITuple GetMatchResult(List<IShot> shots);
+        ITuple GetMatchResult(IMatch match);
     }
 }
