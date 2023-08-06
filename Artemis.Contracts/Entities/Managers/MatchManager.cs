@@ -6,10 +6,10 @@ namespace Artemis.Contracts.Entities.Managers
     public abstract class MatchManager : IMatchManager
     {
         protected static double DecimalSeries(List<IShot> shots)
-            => shots.Sum(x => x.GetValue());
+            => shots.Sum(x => x.Value);
 
         protected static int IntegerSeries(List<IShot> shots)
-            => shots.Sum(x => (int)Math.Floor(x.GetValue()));
+            => shots.Sum(x => (int)Math.Floor(x.Value));
 
         private static ITuple GetMultipleSeriesResult(List<ITuple> results)
             => new Tuple<List<ITuple>, int?, double?, int?>(

@@ -4,6 +4,30 @@ namespace Artemis.Contracts.Entities.Interfaces
 {
     public interface IMatch
     {
+        string Id { get; }
+
+        User Shooter { get; set; }
+
+        Timestamp StartTimestamp { get; set; }
+
+        Timestamp EndTimestamp { get; set; }
+
+        Location Location { get; set; }
+
+        double? AirTemperature { get; set; }
+
+        double? AirPressure { get; set; }
+
+        double? WindSpeed { get; set; }
+
+        int? WindDirection { get; set; }
+
+        string? EnvironmentNotes { get; set; }
+
+        string? EquipmentNotes { get; set; }
+
+        string? ShooterNotes { get; set; }
+
         int GetNumberOfShotsInSeries();
 
         int GetNumberOfSeriesInPhase();

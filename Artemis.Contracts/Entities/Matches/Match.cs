@@ -13,16 +13,16 @@ namespace Artemis.Contracts.Entities.Matches
         protected List<IShot> Shots;
 
         [Key]
-        public string Id { get; set; }
+        public string Id { get; }
 
-        [ForeignKey("ShooterId")]
+        [ForeignKey("UserId")]
         public User Shooter { get; set; } = default!;
 
-        [ForeignKey("StartTimestampId")]
-        public DateTime StartTimestamp { get; set; }
+        [ForeignKey("TimestampId")]
+        public Timestamp StartTimestamp { get; set; } = default!;
 
-        [ForeignKey("EndTimestampId")]
-        public DateTime EndTimestamp { get; set; }
+        [ForeignKey("TimestampId")]
+        public Timestamp EndTimestamp { get; set; } = default!;
 
         [ForeignKey("LocationId")]
         public Location Location { get; set; } = default!;
@@ -114,8 +114,8 @@ namespace Artemis.Contracts.Entities.Matches
 
         protected Match(
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             double? airTemperature = null,
             double? airPressure = null,
@@ -142,8 +142,8 @@ namespace Artemis.Contracts.Entities.Matches
         protected Match(
             string id,
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             List<IShot> shots,
             double? airTemperature = null,

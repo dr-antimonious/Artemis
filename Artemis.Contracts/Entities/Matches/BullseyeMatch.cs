@@ -7,10 +7,10 @@ namespace Artemis.Contracts.Entities.Matches
         public const double BullseyeMinimum = 10.4;
 
         public override int GetTotalBullseyeCount()
-            => Shots.Count(x => x.GetValue() >= BullseyeMinimum);
+            => Shots.Count(x => x.Value >= BullseyeMinimum);
 
         public override int GetBullseyeCountOfShots(List<IShot> shots)
-            => shots.Count(x => x.GetValue() >= BullseyeMinimum);
+            => shots.Count(x => x.Value >= BullseyeMinimum);
 
         protected BullseyeMatch() : base()
         {
@@ -18,8 +18,8 @@ namespace Artemis.Contracts.Entities.Matches
 
         protected BullseyeMatch(
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             double? airTemperature = null,
             double? airPressure = null,
@@ -46,8 +46,8 @@ namespace Artemis.Contracts.Entities.Matches
         protected BullseyeMatch(
             string id,
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             List<IShot> shots,
             double? airTemperature = null,

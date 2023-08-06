@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Artemis.Contracts.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<string>
     {
-        [Required]
+        [Required(ErrorMessage = "First name is required")]
         [PersonalData]
         public string FirstName { get; set; } = default!;
 
         [PersonalData]
         public string AdditionalNames { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required")]
         [PersonalData]
         public string LastName { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Date of birth is required")]
         [PersonalData]
         public DateTime DateOfBirth { get; set; } = default!;
 
-        [Required]
+        [Required(ErrorMessage = "Gender is required")]
         [PersonalData]
         public char Gender { get; set; } = default!;
 

@@ -49,8 +49,8 @@ namespace Artemis.Contracts.Entities.Matches
 
         protected PhasedBullseyeMatch(
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             double? airTemperature = null,
             double? airPressure = null,
@@ -77,8 +77,8 @@ namespace Artemis.Contracts.Entities.Matches
         protected PhasedBullseyeMatch(
             string id,
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             List<IShot> shots,
             double? airTemperature = null,

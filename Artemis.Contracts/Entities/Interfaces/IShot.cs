@@ -2,20 +2,14 @@
 {
     public interface IShot
     {
-        double GetValue();
+        string Id { get; }
 
-        void SetValue(double value);
+        Timestamp? TimeStamp { get; set; }
 
-        double? GetHorizontalDisplacement();
+        double Value { get; set; }
 
-        void SetHorizontalDisplacement(double displacement);
+        double? HorizontalDisplacement { get; set; }
 
-        double? GetVerticalDisplacement();
-
-        void SetVerticalDisplacement(double displacement);
-
-        DateTime? GetTimeStamp();
-
-        void SetTimeStamp(DateTime timeStamp);
+        double? VerticalDisplacement { get; set; }
     }
 }

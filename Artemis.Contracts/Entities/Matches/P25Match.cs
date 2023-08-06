@@ -13,8 +13,8 @@ namespace Artemis.Contracts.Entities.Matches
 
         public P25Match(
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             double? airTemperature = null,
             double? airPressure = null,
@@ -41,8 +41,8 @@ namespace Artemis.Contracts.Entities.Matches
         public P25Match(
             string id,
             User shooter,
-            DateTime startTimestamp,
-            DateTime endTimestamp,
+            Timestamp startTimestamp,
+            Timestamp endTimestamp,
             Location location,
             List<IShot> shots,
             double? airTemperature = null,

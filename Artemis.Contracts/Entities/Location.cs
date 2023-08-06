@@ -34,10 +34,6 @@ namespace Artemis.Contracts.Entities
             string name,
             City city,
             Country country)
-            : this(
-                name,
-                city,
-                country)
         {
             this.Id = id;
             this.Name = name;

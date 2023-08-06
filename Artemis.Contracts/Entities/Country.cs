@@ -22,9 +22,9 @@ namespace Artemis.Contracts.Entities
         }
 
         public Country(string id, string name)
-            : this(name)
         {
             this.Id = id;
+            this.Name = name;
         }
     }
 }
