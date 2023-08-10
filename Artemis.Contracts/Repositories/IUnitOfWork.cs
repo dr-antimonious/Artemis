@@ -5,9 +5,9 @@ namespace Artemis.Contracts.Repositories
 {
     public interface IUnitOfWork
     {
-        INameRepository<City> Cities { get; }
+        ICityRepository<City> Cities { get; }
 
-        INameRepository<Country> Countries { get; }
+        ICountryRepository<Country> Countries { get; }
 
         ILocationRepository<Location> Locations { get; }
 
@@ -15,8 +15,10 @@ namespace Artemis.Contracts.Repositories
 
         IRemovableRepository<IShot> Shots { get; }
 
-        IRepository<Timestamp> Timestamps { get; }
+        ITimestampRepository<Timestamp> Timestamps { get; }
 
         IUserRepository<User> Users { get; }
+
+        Task SaveChangesAsync();
     }
 }

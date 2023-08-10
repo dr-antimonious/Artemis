@@ -9,7 +9,6 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; }
 
-        [ForeignKey("TimestampId")]
         public Timestamp? TimeStamp { get; set; }
 
         [Required]

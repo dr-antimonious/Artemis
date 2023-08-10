@@ -15,16 +15,12 @@ namespace Artemis.Contracts.Entities.Matches
         [Key]
         public string Id { get; }
 
-        [ForeignKey("UserId")]
         public User Shooter { get; set; } = default!;
 
-        [ForeignKey("TimestampId")]
         public Timestamp StartTimestamp { get; set; } = default!;
 
-        [ForeignKey("TimestampId")]
         public Timestamp EndTimestamp { get; set; } = default!;
 
-        [ForeignKey("LocationId")]
         public Location Location { get; set; } = default!;
 
         public double? AirTemperature { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Artemis.Contracts.Entities;
-using Artemis.Contracts.Entities.Matches;
 using Artemis.Contracts.Repositories;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -7,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Artemis.Data.Db.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : Repository<User>, IUserRepository<User>
     {
         private readonly DbSet<User> _users;
 
         public async Task Create(User entity)
         {
-            await _users.AddAsync(entity);
+            await HandleCancelTask(_users.AddAsync(entity));
         }
 
         public async Task Delete(User entity)
@@ -23,7 +22,7 @@ namespace Artemis.Data.Db.Repositories
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _users.ToListAsync();
+            return await HandleNullCancelTask(_users.ToListAsync());
         }
 
         public async Task<User> GetAsync(string id)
@@ -31,9 +30,10 @@ namespace Artemis.Data.Db.Repositories
             return await _users.FindAsync(id);
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _users.FirstOrDefaultAsync(x => x.Email.Equals(email));
+            return await HandleNullCancelTask(_users.FirstOrDefaultAsync(
+                x => x.Email.Equals(email)));
         }
 
         public async Task Update(User entity)

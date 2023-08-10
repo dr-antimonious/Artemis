@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Artemis.Data.Db.Repositories
 {
-    public class MatchRepository : IMatchRepository<Match>
+    public class MatchRepository : Repository<Match>, IMatchRepository<Match>
     {
         private readonly DbSet<Match> _matches;
 
         public async Task Create(Match entity)
         {
-            await _matches.AddAsync(entity);
+            await HandleCancelTask(_matches.AddAsync(entity));
         }
 
         public async Task Delete(Match entity)
@@ -23,7 +23,7 @@ namespace Artemis.Data.Db.Repositories
 
         public async Task<List<Match>> GetAllAsync()
         {
-            return await _matches.ToListAsync();
+            return await HandleNullCancelTask(_matches.ToListAsync());
         }
 
         public async Task<Match> GetAsync(string id)
@@ -33,7 +33,8 @@ namespace Artemis.Data.Db.Repositories
 
         public async Task<List<Match>> GetByUserIdAsync(string userId)
         {
-            return await _matches.Where(x => x.Shooter.Id.Equals(userId)).ToListAsync();
+            return await HandleNullCancelTask(_matches.Where(
+                x => x.Shooter.Id.Equals(userId)).ToListAsync());
         }
 
         public async Task Update(Match entity)

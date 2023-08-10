@@ -1,21 +1,23 @@
 ﻿using Artemis.Contracts.Entities;
 using Artemis.Contracts.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Artemis.Data.Db.Repositories
 {
-    public class CityRepository : INameRepository<City>
+    public class CityRepository : Repository<City>, ICityRepository<City>
     {
         private readonly DbSet<City> _cities;
 
         public async Task Create(City entity)
         {
-            await _cities.AddAsync(entity);
+            await HandleCancelTask(_cities.AddAsync(entity));
         }
 
         public async Task<List<City>> GetAllAsync()
         {
-            return await _cities.ToListAsync();
+            return await HandleNullCancelTask(_cities.ToListAsync());
         }
 
         public async Task<City> GetAsync(string id)
@@ -23,15 +25,28 @@ namespace Artemis.Data.Db.Repositories
             return await _cities.FindAsync(id);
         }
 
+        public async Task<List<City>> GetByCountryNameAsync(string country)
+        {
+            return await HandleNullCancelTask(_cities.Where(
+                x => x.Countries.Exists(
+                        y => y.Name.Equals(country))
+                    .Equals(true)).ToListAsync());
+        }
+
         public async Task<List<City>> GetByNameAsync(string name)
         {
-            //TODO: reformat into single entity, list not possible
-            return await _cities.Where(x => x.Name.Equals(name)).ToListAsync();
+            return await HandleNullCancelTask(_cities.Where(
+                x => x.Name.Equals(name)).ToListAsync());
         }
         
-        public Task Update(City entity)
+        public async Task Update(City entity)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _cities.Update(entity));
+        }
+
+        public CityRepository(IdentityDbContext<User, IdentityRole<string>, string> dbContext)
+        {
+            _cities = dbContext.Set<City>();
         }
     }
 }

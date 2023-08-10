@@ -10,9 +10,15 @@ namespace Artemis.Contracts.Entities
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = default!;
 
+        public List<City> Cities { get; set; }
+
+        public List<Location> Locations { get; set; }
+
         public Country()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Cities = new List<City>();
+            this.Locations = new List<Location>();
         }
 
         public Country(string name)
@@ -21,10 +27,16 @@ namespace Artemis.Contracts.Entities
             this.Name = name;
         }
 
-        public Country(string id, string name)
+        public Country(
+            string id, 
+            string name, 
+            List<City> cities,
+            List<Location> locations)
         {
             this.Id = id;
             this.Name = name;
+            this.Cities = cities;
+            this.Locations = locations;
         }
     }
 }

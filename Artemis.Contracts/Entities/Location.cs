@@ -10,10 +10,8 @@ namespace Artemis.Contracts.Entities
 
         public string Name { get; set; } = default!;
 
-        [ForeignKey("CityId")]
         public City City { get; set; } = default!;
 
-        [ForeignKey("CountryId")]
         public Country Country { get; set; } = default!;
 
         public Location()
