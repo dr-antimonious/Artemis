@@ -32,8 +32,9 @@ namespace Artemis.Data.Db.Repositories
 
         public async Task<User?> GetByEmailAsync(string email)
         {
-            return await HandleNullCancelTask(_users.FirstOrDefaultAsync(
-                x => x.Email.Equals(email)));
+            return await HandleNullCancelTask(
+                _users.FirstOrDefaultAsync(
+                    x => x.Email.Equals(email)));
         }
 
         public async Task Update(User entity)

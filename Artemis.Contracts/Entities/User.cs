@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Artemis.Contracts.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Artemis.Contracts.Entities
@@ -7,26 +8,29 @@ namespace Artemis.Contracts.Entities
     {
         [Required(ErrorMessage = "First name is required")]
         [PersonalData]
-        public string FirstName { get; set; } = default!;
+        public string FirstName { get; set; } = null!;
 
         [PersonalData]
-        public string AdditionalNames { get; set; } = default!;
+        public string AdditionalNames { get; set; } = null!;
 
         [Required(ErrorMessage = "Last name is required")]
         [PersonalData]
-        public string LastName { get; set; } = default!;
+        public string LastName { get; set; } = null!;
 
         [Required(ErrorMessage = "Date of birth is required")]
         [PersonalData]
-        public DateTime DateOfBirth { get; set; } = default!;
+        public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Gender is required")]
         [PersonalData]
-        public char Gender { get; set; } = default!;
+        public char Gender { get; set; }
+
+        public List<IMatch> Matches { get; set; }
 
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Matches = new List<IMatch>();
         }
 
         public User(
@@ -56,7 +60,8 @@ namespace Artemis.Contracts.Entities
             DateTime dateOfBirth,
             char gender,
             string email,
-            string phoneNumber)
+            string phoneNumber,
+            List<IMatch> matches)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -66,6 +71,7 @@ namespace Artemis.Contracts.Entities
             this.Gender = gender;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
+            this.Matches = matches;
         }
     }
 }

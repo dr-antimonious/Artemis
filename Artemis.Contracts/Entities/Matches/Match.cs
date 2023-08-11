@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using Artemis.Contracts.Entities.Interfaces;
 using Artemis.Contracts.Entities.Managers;
@@ -15,13 +14,13 @@ namespace Artemis.Contracts.Entities.Matches
         [Key]
         public string Id { get; }
 
-        public User Shooter { get; set; } = default!;
+        public User Shooter { get; set; } = null!;
 
-        public Timestamp StartTimestamp { get; set; } = default!;
+        public Timestamp StartTimestamp { get; set; } = null!;
 
-        public Timestamp EndTimestamp { get; set; } = default!;
+        public Timestamp EndTimestamp { get; set; } = null!;
 
-        public Location Location { get; set; } = default!;
+        public Location Location { get; set; } = null!;
 
         public double? AirTemperature { get; set; }
 

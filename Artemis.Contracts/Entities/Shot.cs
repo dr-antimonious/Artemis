@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Artemis.Contracts.Entities.Interfaces;
 
 namespace Artemis.Contracts.Entities

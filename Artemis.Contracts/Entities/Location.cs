@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Artemis.Contracts.Entities
 {
@@ -8,11 +7,11 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; }
 
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
-        public City City { get; set; } = default!;
+        public City City { get; set; } = null!;
 
-        public Country Country { get; set; } = default!;
+        public Country Country { get; set; } = null!;
 
         public Location()
         {
