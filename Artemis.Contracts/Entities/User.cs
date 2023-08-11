@@ -6,24 +6,29 @@ namespace Artemis.Contracts.Entities
 {
     public class User : IdentityUser<string>
     {
-        [Required(ErrorMessage = "First name is required")]
-        [PersonalData]
+        [Key]
+        public override string Id { get; set; } = null!;
+
+        [Required(ErrorMessage = "First name is required"), ProtectedPersonalData]
         public string FirstName { get; set; } = null!;
 
-        [PersonalData]
+        [ProtectedPersonalData]
         public string AdditionalNames { get; set; } = null!;
 
-        [Required(ErrorMessage = "Last name is required")]
-        [PersonalData]
+        [Required(ErrorMessage = "Last name is required"), ProtectedPersonalData]
         public string LastName { get; set; } = null!;
 
-        [Required(ErrorMessage = "Date of birth is required")]
-        [PersonalData]
+        [Required(ErrorMessage = "Date of birth is required"), ProtectedPersonalData]
         public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = "Gender is required")]
-        [PersonalData]
+        [Required(ErrorMessage = "Gender is required"), ProtectedPersonalData]
         public char Gender { get; set; }
+
+        [Required(ErrorMessage = "Email is required"), ProtectedPersonalData, EmailAddress]
+        public new string Email { get; set; } = null!;
+
+        [Required(ErrorMessage = "Phone number is required"), ProtectedPersonalData, Phone]
+        public new string PhoneNumber { get; set; } = null!;
 
         public List<IMatch> Matches { get; set; }
 

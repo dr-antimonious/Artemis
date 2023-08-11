@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Exceptions;
 
 namespace Artemis.Contracts.Entities.Managers
 {
@@ -22,7 +23,8 @@ namespace Artemis.Contracts.Entities.Managers
             => GetMultipleSeriesResult(match.GetAllSeriesResults());
 
         public virtual ITuple GetSeriesResults(IMatch match, int index)
-            => throw new NotSupportedException();
+            => throw new AbstractClassMethodCallException(
+                nameof(GetSeriesResults), this.GetType().ToString());
 
         public virtual ITuple GetPhaseResults(IMatch match, int index)
             => GetMultipleSeriesResult(match.GetSeriesResultsOfPhase(index));

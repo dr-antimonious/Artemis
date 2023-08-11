@@ -20,7 +20,7 @@ namespace Artemis.Data.Db.Repositories
             return await HandleNullCancelTask(_timestamps.ToListAsync());
         }
 
-        public async Task<Timestamp> GetAsync(string id)
+        public async Task<Timestamp?> GetAsync(string id)
         {
             return await _timestamps.FindAsync(id);
         }

@@ -23,7 +23,7 @@ namespace Artemis.Data.Db.Repositories
 
         private IUserRepository<User> _userRepository = null!;
 
-        private IdentityDbContext<User, IdentityRole<string>, string> _dbContext;
+        private readonly IdentityDbContext<User, IdentityRole<string>, string> _dbContext;
 
         public ICityRepository<City> Cities
         {

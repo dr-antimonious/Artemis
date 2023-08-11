@@ -4,7 +4,7 @@
     {
         Task<List<T>> GetAllAsync();
 
-        Task<T> GetAsync(string id);
+        Task<T?> GetAsync(string id);
 
         Task Create(T entity);
 

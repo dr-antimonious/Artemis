@@ -25,7 +25,7 @@ namespace Artemis.Data.Db.Repositories
             return await HandleNullCancelTask(_users.ToListAsync());
         }
 
-        public async Task<User> GetAsync(string id)
+        public async Task<User?> GetAsync(string id)
         {
             return await _users.FindAsync(id);
         }
@@ -39,7 +39,7 @@ namespace Artemis.Data.Db.Repositories
 
         public async Task Update(User entity)
         {
-            await Task.Run(() => _users.Remove(entity));
+            await Task.Run(() => _users.Update(entity));
         }
 
         public UserRepository(IdentityDbContext<User, IdentityRole<string>, string> dbContext)

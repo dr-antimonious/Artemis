@@ -26,7 +26,7 @@ namespace Artemis.Data.Db.Repositories
             return await HandleNullCancelTask(_shots.ToListAsync());
         }
 
-        public async Task<IShot> GetAsync(string id)
+        public async Task<IShot?> GetAsync(string id)
         {
             return await _shots.FindAsync(id);
         }

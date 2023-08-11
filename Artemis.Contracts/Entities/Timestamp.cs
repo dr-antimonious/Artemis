@@ -7,7 +7,7 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Timestamp timestamp is required")]
         public DateTime TimeStamp { get; set; }
 
         public Timestamp()

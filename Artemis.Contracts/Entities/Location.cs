@@ -7,6 +7,7 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; set; }
 
+        [Required(ErrorMessage = "Location name is required")]
         public string Name { get; set; } = null!;
 
         public City City { get; set; } = null!;

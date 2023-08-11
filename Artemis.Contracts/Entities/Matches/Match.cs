@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Artemis.Contracts.Entities.Interfaces;
 using Artemis.Contracts.Entities.Managers;
+using Artemis.Contracts.Exceptions;
 
 namespace Artemis.Contracts.Entities.Matches
 {
@@ -43,15 +44,21 @@ namespace Artemis.Contracts.Entities.Matches
         public int GetNumberOfShotsInSeries() => ShotsInSeries;
 
         public virtual int GetNumberOfSeriesInPhase()
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetNumberOfSeriesInPhase),
+                this.GetType().ToString());
 
         public virtual int GetNumberOfPhases()
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetNumberOfPhases),
+                this.GetType().ToString());
 
         public virtual int GetNumberOfSeries() => SeriesInPhase;
 
         public virtual int GetNumberOfShotsInPhase()
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetNumberOfShotsInPhase),
+                this.GetType().ToString());
 
         public virtual int GetNumberOfShots()
             => ShotsInSeries * SeriesInPhase;
@@ -70,7 +77,9 @@ namespace Artemis.Contracts.Entities.Matches
                 ShotsInSeries));
 
         public virtual List<IShot> GetShotsOfPhase(int index)
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetShotsOfPhase),
+                this.GetType().ToString());
 
         public ITuple GetSeriesResults(int index)
             => Manager.GetSeriesResults(this, index);
@@ -84,22 +93,32 @@ namespace Artemis.Contracts.Entities.Matches
         }
 
         public virtual List<ITuple> GetSeriesResultsOfPhase(int index)
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetSeriesResultsOfPhase),
+                this.GetType().ToString());
 
         public virtual ITuple GetPhaseResults(int index)
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetPhaseResults),
+                this.GetType().ToString());
 
         public virtual List<ITuple> GetAllPhaseResults()
-            => throw new NotSupportedException();
+            => throw new PhasesNotSupportedException(
+                nameof(GetAllPhaseResults),
+                this.GetType().ToString());
 
         public ITuple GetMatchResult()
             => Manager.GetMatchResult(this);
 
         public virtual int GetTotalBullseyeCount()
-            => throw new NotSupportedException();
+            => throw new BullseyeNotSupportedException(
+                nameof(GetTotalBullseyeCount),
+                this.GetType().ToString());
 
         public virtual int GetBullseyeCountOfShots(List<IShot> shots)
-            => throw new NotSupportedException();
+            => throw new BullseyeNotSupportedException(
+                nameof(GetBullseyeCountOfShots),
+                this.GetType().ToString());
 
         protected Match()
         {

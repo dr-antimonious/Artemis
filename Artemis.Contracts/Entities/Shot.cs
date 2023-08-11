@@ -10,7 +10,7 @@ namespace Artemis.Contracts.Entities
 
         public Timestamp? TimeStamp { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Shot value is required")]
         public double Value { get; set; }
 
         public double? HorizontalDisplacement { get; set; }
