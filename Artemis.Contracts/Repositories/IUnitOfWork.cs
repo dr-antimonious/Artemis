@@ -1,5 +1,5 @@
 ﻿using Artemis.Contracts.Entities;
-using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Matches;
 
 namespace Artemis.Contracts.Repositories
 {
@@ -11,9 +11,9 @@ namespace Artemis.Contracts.Repositories
 
         ILocationRepository<Location> Locations { get; }
 
-        IMatchRepository<IMatch> Matches { get; }
+        IMatchRepository<Match> Matches { get; }
 
-        IRemovableRepository<IShot> Shots { get; }
+        IRemovableRepository<Shot> Shots { get; }
 
         ITimestampRepository<Timestamp> Timestamps { get; }
 

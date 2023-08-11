@@ -11,40 +11,26 @@ namespace Artemis.Data.Db.Repositories
         private readonly DbSet<User> _users;
 
         public async Task Create(User entity)
-        {
-            await HandleCancelTask(_users.AddAsync(entity));
-        }
+            => await HandleCancelTask(_users.AddAsync(entity));
 
         public async Task Delete(User entity)
-        {
-            await Task.Run(() => _users.Remove(entity));
-        }
+            => await Task.Run(() => _users.Remove(entity));
 
         public async Task<List<User>> GetAllAsync()
-        {
-            return await HandleNullCancelTask(_users.ToListAsync());
-        }
+            => await HandleNullCancelTask(_users.ToListAsync());
 
         public async Task<User?> GetAsync(string id)
-        {
-            return await _users.FindAsync(id);
-        }
+            => await _users.FindAsync(id);
 
         public async Task<User?> GetByEmailAsync(string email)
-        {
-            return await HandleNullCancelTask(
+            => await HandleNullCancelTask(
                 _users.FirstOrDefaultAsync(
                     x => x.Email.Equals(email)));
-        }
 
         public async Task Update(User entity)
-        {
-            await Task.Run(() => _users.Update(entity));
-        }
+            => await Task.Run(() => _users.Update(entity));
 
         public UserRepository(IdentityDbContext<User, IdentityRole<string>, string> dbContext)
-        {
-            _users = dbContext.Set<User>();
-        }
+            => _users = dbContext.Set<User>();
     }
 }

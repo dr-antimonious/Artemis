@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Matches;
 using Microsoft.AspNetCore.Identity;
 
 namespace Artemis.Contracts.Entities
@@ -30,12 +30,17 @@ namespace Artemis.Contracts.Entities
         [Required(ErrorMessage = "Phone number is required"), ProtectedPersonalData, Phone]
         public new string PhoneNumber { get; set; } = null!;
 
-        public List<IMatch> Matches { get; set; }
+        [Required(ErrorMessage = "Password is required"), ProtectedPersonalData]
+        public new string PasswordHash { get; set; } = null!;
+
+        public List<Match> Matches { get; set; }
+
+        public string FullName => $"{FirstName} {AdditionalNames} {LastName}";
 
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Matches = new List<IMatch>();
+            this.Matches = new List<Match>();
         }
 
         public User(
@@ -45,7 +50,8 @@ namespace Artemis.Contracts.Entities
             DateTime dateOfBirth,
             char gender,
             string email,
-            string phoneNumber)
+            string phoneNumber,
+            string passwordHash)
             : this()
         {
             this.FirstName = firstName;
@@ -55,6 +61,7 @@ namespace Artemis.Contracts.Entities
             this.Gender = gender;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
+            this.PasswordHash = passwordHash;
         }
 
         public User(
@@ -66,7 +73,8 @@ namespace Artemis.Contracts.Entities
             char gender,
             string email,
             string phoneNumber,
-            List<IMatch> matches)
+            string passwordHash,
+            List<Match> matches)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -76,6 +84,7 @@ namespace Artemis.Contracts.Entities
             this.Gender = gender;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
+            this.PasswordHash = passwordHash;
             this.Matches = matches;
         }
     }

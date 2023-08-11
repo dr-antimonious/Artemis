@@ -11,28 +11,32 @@ namespace Artemis.Services
     {
         private readonly IConfiguration _configuration;
 
-        public TokenDto GenerateToken(List<Claim> claims)
+        public async Task<TokenDto> GenerateToken(List<Claim> claims)
         {
-            byte[] keyBytes = Encoding.UTF8.GetBytes(
-                this._configuration["JWT:Key"]!);
-            SymmetricSecurityKey authSigningKey = new(keyBytes);
-            JwtSecurityToken jwtSecurityToken = new(
-                issuer: _configuration["JWT:Issuer"],
-                audience: _configuration["JWT:Audience"],
-                expires: DateTime.Now.AddHours(
-                    int.Parse(_configuration["JWT:ValidHours"]!)),
-                claims: claims,
-                signingCredentials: new SigningCredentials(
-                    authSigningKey,
-                    SecurityAlgorithms.HmacSha256));
-
-            string token = new JwtSecurityTokenHandler()
-                .WriteToken(jwtSecurityToken);
-            return new TokenDto
+            return await Task.Run(() =>
             {
-                Token = token,
-                ExpiresAt = jwtSecurityToken.ValidTo,
-            };
+                byte[] keyBytes = Encoding.UTF8.GetBytes(
+                    this._configuration["JWT:Key"]!);
+                SymmetricSecurityKey authSigningKey = new(keyBytes);
+                JwtSecurityToken jwtSecurityToken = new(
+                    issuer: _configuration["JWT:Issuer"],
+                    audience: _configuration["JWT:Audience"],
+                    expires: DateTime.Now.AddHours(
+                        int.Parse(_configuration["JWT:ValidHours"]!)),
+                    claims: claims,
+                    signingCredentials: new SigningCredentials(
+                        authSigningKey,
+                        SecurityAlgorithms.HmacSha256));
+
+                string token = new JwtSecurityTokenHandler()
+                    .WriteToken(jwtSecurityToken);
+
+                return new TokenDto
+                {
+                    Token = token,
+                    ExpiresAt = jwtSecurityToken.ValidTo,
+                };
+            });
         }
 
         public TokenGenerator(IConfiguration configuration)

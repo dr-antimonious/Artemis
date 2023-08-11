@@ -1,5 +1,5 @@
 ﻿using Artemis.Contracts.Entities;
-using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.Entities.Matches;
 using Artemis.Contracts.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,9 +15,9 @@ namespace Artemis.Data.Db.Repositories
 
         private ILocationRepository<Location> _locationRepository = null!;
 
-        private IMatchRepository<IMatch> _matchRepository = null!;
+        private IMatchRepository<Match> _matchRepository = null!;
 
-        private IRemovableRepository<IShot> _shotRepository = null!;
+        private IRemovableRepository<Shot> _shotRepository = null!;
 
         private ITimestampRepository<Timestamp> _timestampRepository = null!;
 
@@ -52,7 +52,7 @@ namespace Artemis.Data.Db.Repositories
             }
         }
 
-        public IMatchRepository<IMatch> Matches
+        public IMatchRepository<Match> Matches
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Artemis.Data.Db.Repositories
             }
         }
 
-        public IRemovableRepository<IShot> Shots
+        public IRemovableRepository<Shot> Shots
         {
             get
             {

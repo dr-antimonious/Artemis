@@ -1,12 +1,12 @@
-﻿using Artemis.Contracts.Entities.Interfaces;
+﻿using Artemis.Contracts.Entities.Matches;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Artemis.Data.Db.Configurations
 {
-    public class MatchConfiguration : IEntityTypeConfiguration<IMatch>
+    public class MatchConfiguration : IEntityTypeConfiguration<Match>
     {
-        public void Configure(EntityTypeBuilder<IMatch> builder)
+        public void Configure(EntityTypeBuilder<Match> builder)
         {
             builder.HasKey(x => x.Id);
 

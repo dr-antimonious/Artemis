@@ -5,6 +5,6 @@ namespace Artemis.Services
 {
     public interface ITokenGenerator
     {
-        TokenDto GenerateToken(List<Claim> claims);
+        Task<TokenDto> GenerateToken(List<Claim> claims);
     }
 }

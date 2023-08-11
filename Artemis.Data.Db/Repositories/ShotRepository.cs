@@ -1,5 +1,4 @@
 ﻿using Artemis.Contracts.Entities;
-using Artemis.Contracts.Entities.Interfaces;
 using Artemis.Contracts.Repositories;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -7,38 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Artemis.Data.Db.Repositories
 {
-    public class ShotRepository : Repository<IShot>, IRemovableRepository<IShot>
+    public class ShotRepository : Repository<Shot>, IRemovableRepository<Shot>
     {
-        private readonly DbSet<IShot> _shots;
+        private readonly DbSet<Shot> _shots;
 
-        public async Task Create(IShot entity)
-        {
-            await HandleCancelTask(_shots.AddAsync(entity));
-        }
+        public async Task Create(Shot entity)
+            => await HandleCancelTask(_shots.AddAsync(entity));
 
-        public async Task Delete(IShot entity)
-        {
-            await Task.Run(() => _shots.Remove(entity));
-        }
+        public async Task Delete(Shot entity)
+            => await Task.Run(() => _shots.Remove(entity));
 
-        public async Task<List<IShot>> GetAllAsync()
-        {
-            return await HandleNullCancelTask(_shots.ToListAsync());
-        }
+        public async Task<List<Shot>> GetAllAsync()
+            => await HandleNullCancelTask(_shots.ToListAsync());
 
-        public async Task<IShot?> GetAsync(string id)
-        {
-            return await _shots.FindAsync(id);
-        }
+        public async Task<Shot?> GetAsync(string id)
+            => await _shots.FindAsync(id);
 
-        public async Task Update(IShot entity)
-        {
-            await Task.Run(() => _shots.Update(entity));
-        }
+        public async Task Update(Shot entity)
+            => await Task.Run(() => _shots.Update(entity));
 
         public ShotRepository(IdentityDbContext<User, IdentityRole<string>, string> dbContext)
-        {
-            _shots = dbContext.Set<IShot>();
-        }
+            => _shots = dbContext.Set<Shot>();
     }
 }
