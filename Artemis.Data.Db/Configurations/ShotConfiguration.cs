@@ -16,6 +16,8 @@ namespace Artemis.Data.Db.Configurations
 
             builder.Property(x => x.Value).IsRequired();
 
+            builder.Property(x => x.Position).IsRequired();
+
             builder.Property(x => x.HorizontalDisplacement);
 
             builder.Property(x => x.VerticalDisplacement);

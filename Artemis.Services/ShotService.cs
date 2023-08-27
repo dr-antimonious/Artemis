@@ -7,19 +7,16 @@ namespace Artemis.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private async Task CreateShotAsync(Shot shot)
+        public async Task CreateShotAsync(Shot shot)
             => await _unitOfWork.Shots.Create(shot);
 
         public async Task CreateShotsAsync(List<Shot> shots)
-            => await Task.Run(() =>
-            {
-                shots.ForEach(async x => await CreateShotAsync(x));
-            });
+            => await _unitOfWork.Shots.CreateMulti(shots);
 
         public async Task DeleteShotAsync(Shot shot)
         {
             await _unitOfWork.Shots.Delete(shot);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Shot?> GetByIdAsync(string id)
@@ -29,10 +26,7 @@ namespace Artemis.Services
             => await _unitOfWork.Shots.Update(shot);
 
         public async Task UpdateShotsAsync(List<Shot> shots)
-            => await Task.Run(() =>
-            {
-                shots.ForEach(async x => await UpdateShotAsync(x));
-            });
+            => await _unitOfWork.Shots.UpdateMulti(shots);
 
         public ShotService(IUnitOfWork unitOfWork)
         {

@@ -159,6 +159,9 @@ namespace Artemis.Data.Db.Migrations
                     b.Property<string>("MatchId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
                     b.Property<string>("TimeStampId")
                         .HasColumnType("nvarchar(450)");
 

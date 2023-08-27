@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Artemis.Contracts.Entities;
 
 namespace Artemis.Contracts.DTOs
 {
@@ -9,6 +8,6 @@ namespace Artemis.Contracts.DTOs
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Country is required")]
-        public Country Country { get; set; }
+        public string Id { get; set; }
     }
 }

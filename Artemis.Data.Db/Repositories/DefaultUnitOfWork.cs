@@ -17,7 +17,7 @@ namespace Artemis.Data.Db.Repositories
 
         private IMatchRepository<Match> _matchRepository = null!;
 
-        private IRemovableRepository<Shot> _shotRepository = null!;
+        private IMultiRepository<Shot> _shotRepository = null!;
 
         private ITimestampRepository<Timestamp> _timestampRepository = null!;
 
@@ -61,7 +61,7 @@ namespace Artemis.Data.Db.Repositories
             }
         }
 
-        public IRemovableRepository<Shot> Shots
+        public IMultiRepository<Shot> Shots
         {
             get
             {

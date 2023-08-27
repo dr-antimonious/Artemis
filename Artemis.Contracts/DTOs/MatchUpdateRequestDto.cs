@@ -4,7 +4,7 @@ using Artemis.Contracts.Entities.Matches;
 
 namespace Artemis.Contracts.DTOs
 {
-    public class MatchRequestDto : MatchCreateRequestDto
+    public class MatchUpdateRequestDto : MatchCreateRequestDto
     {
         [Required(ErrorMessage = "Id is required")]
         public string Id { get; set; }
@@ -12,11 +12,11 @@ namespace Artemis.Contracts.DTOs
         [Required(ErrorMessage = "Shots are required")]
         public new List<ExtendedShotDto> Shots { get; set; }
 
-        public MatchRequestDto() : base()
+        public MatchUpdateRequestDto() : base()
         {
         }
 
-        public MatchRequestDto(
+        public MatchUpdateRequestDto(
             string id,
             string type,
             User shooter,
@@ -49,7 +49,7 @@ namespace Artemis.Contracts.DTOs
             Shots = shots.Convert<ExtendedShotDto, Shot>();
         }
 
-        public MatchRequestDto(Match match)
+        public MatchUpdateRequestDto(Match match)
         : this(
             match.Id,
             Match.TypeConversion.First(x => x.Key.Equals(match.GetType())).Value,

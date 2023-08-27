@@ -39,13 +39,5 @@ namespace Artemis.Contracts.Entities
             this.Countries = countries;
             this.Locations = locations;
         }
-
-        public City(CityCreateRequestDto createRequest)
-        {
-            this.Id = Guid.NewGuid().ToString();
-            this.Name = createRequest.Name;
-            this.Countries = new List<Country> {createRequest.Country};
-            this.Locations = new List<Location>();
-        }
     }
 }

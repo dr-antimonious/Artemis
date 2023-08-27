@@ -14,26 +14,43 @@ namespace Artemis.Data.Db.Repositories
             => await HandleCancelTask(_locations.AddAsync(entity));
 
         public async Task<List<Location>> GetAllAsync()
-            => await HandleNullCancelTask(_locations.ToListAsync());
+            => await HandleNullCancelTask(_locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .ToListAsync());
 
         public async Task<Location?> GetAsync(string id)
-            => await _locations.FindAsync(id);
+            => await _locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
         public async Task<List<Location>> GetByCityNameAsync(string city)
-            => await HandleNullCancelTask(_locations.Where(
-                x => x.City.Name.Equals(city)).ToListAsync());
+            => await HandleNullCancelTask(_locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .Where(x => x.City.Name.Equals(city))
+                .ToListAsync());
 
         public async Task<List<Location>> GetByCountryNameAsync(string country)
-            => await HandleNullCancelTask(_locations.Where(
-                x => x.Country.Name.Equals(country)).ToListAsync());
+            => await HandleNullCancelTask(_locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .Where(x => x.Country.Name.Equals(country))
+                .ToListAsync());
 
         public async Task<List<Location>> GetByPartialNameMatchAsync(string name)
-            => await HandleNullCancelTask(_locations.Where(
-                x => x.Name.Contains(name)).ToListAsync());
+            => await HandleNullCancelTask(_locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .Where(x => x.Name.Contains(name))
+                .ToListAsync());
 
         public async Task<Location?> GetByExactNameMatchAsync(string name)
-            => await HandleNullCancelTask(_locations.FirstOrDefaultAsync(
-                x => x.Name.Equals(name)));
+            => await HandleNullCancelTask(_locations
+                .Include(x => x.City)
+                .Include(x => x.Country)
+                .FirstOrDefaultAsync(x => x.Name.Equals(name)));
 
         public async Task Update(Location entity)
             => await Task.Run(() => _locations.Update(entity));

@@ -9,6 +9,10 @@ namespace Artemis.Contracts.Entities
         [Key]
         public string Id { get; }
 
+        [Required(ErrorMessage = "Shot position is required"),
+        Range(1, 120)]
+        public int Position { get; set; }
+
         public Timestamp? TimeStamp { get; set; }
 
         [Required(ErrorMessage = "Shot value is required")]
@@ -28,12 +32,14 @@ namespace Artemis.Contracts.Entities
 
         public Shot(
             double value,
+            int position,
             Timestamp? timeStamp = null,
             double? horizontalDisplacement = null,
             double? verticalDisplacement = null)
             : this()
         {
             this.Value = value;
+            this.Position = position;
             this.TimeStamp = timeStamp;
             this.HorizontalDisplacement = horizontalDisplacement;
             this.VerticalDisplacement = verticalDisplacement;
@@ -41,7 +47,8 @@ namespace Artemis.Contracts.Entities
 
         public Shot(
             string id, 
-            double value, 
+            double value,
+            int position,
             Timestamp? timeStamp = null, 
             double? horizontalDisplacement = null, 
             double? verticalDisplacement = null)
@@ -49,6 +56,7 @@ namespace Artemis.Contracts.Entities
             this.Id = id;
             this.TimeStamp = timeStamp;
             this.Value = value;
+            this.Position = position;
             this.HorizontalDisplacement = horizontalDisplacement;
             this.VerticalDisplacement = verticalDisplacement;
         }
@@ -56,6 +64,7 @@ namespace Artemis.Contracts.Entities
         public Shot(ShotDto dto)
             : this(
                 dto.Value,
+                dto.Position,
                 dto.Timestamp,
                 dto.HorizontalDisplacement,
                 dto.VerticalDisplacement)
@@ -66,6 +75,7 @@ namespace Artemis.Contracts.Entities
             : this(
                 dto.Id,
                 dto.Value,
+                dto.Position,
                 dto.Timestamp,
                 dto.HorizontalDisplacement,
                 dto.VerticalDisplacement)

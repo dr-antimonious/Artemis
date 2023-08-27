@@ -110,8 +110,8 @@ namespace Artemis.Contracts.Entities.Matches
         {
         }
 
-        protected PhasedBullseyeMatch(MatchRequestDto matchRequest)
-            : base(matchRequest)
+        protected PhasedBullseyeMatch(MatchUpdateRequestDto matchUpdateRequest)
+            : base(matchUpdateRequest)
         {
         }
     }

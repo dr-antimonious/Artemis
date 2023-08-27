@@ -13,7 +13,7 @@ namespace Artemis.Contracts.Repositories
 
         IMatchRepository<Match> Matches { get; }
 
-        IRemovableRepository<Shot> Shots { get; }
+        IMultiRepository<Shot> Shots { get; }
 
         ITimestampRepository<Timestamp> Timestamps { get; }
 

@@ -66,7 +66,7 @@ namespace Artemis.API
 
             services.AddScoped<IMatchRepository<Match>, MatchRepository>();
 
-            services.AddScoped<IRemovableRepository<Shot>, ShotRepository>();
+            services.AddScoped<IMultiRepository<Shot>, ShotRepository>();
 
             services.AddScoped<ITimestampRepository<Timestamp>, TimestampRepository>();
 

@@ -79,8 +79,8 @@ namespace Artemis.Contracts.Entities.Matches
         {
         }
 
-        protected BullseyeMatch(MatchRequestDto matchRequest)
-            : base(matchRequest)
+        protected BullseyeMatch(MatchUpdateRequestDto matchUpdateRequest)
+            : base(matchUpdateRequest)
         {
         }
     }

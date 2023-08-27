@@ -75,8 +75,8 @@ namespace Artemis.Contracts.Entities.Matches
         {
         }
 
-        public RFP25Match(MatchRequestDto matchRequest)
-            : base(matchRequest)
+        public RFP25Match(MatchUpdateRequestDto matchUpdateRequest)
+            : base(matchUpdateRequest)
         {
         }
     }

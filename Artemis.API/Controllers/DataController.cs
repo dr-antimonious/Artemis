@@ -26,6 +26,8 @@ namespace Artemis.API.Controllers
 
         private readonly TimestampService _timestampService;
 
+        private readonly UserService _userService;
+
         // City service routes
 
         [HttpPost, Route("city/add")]
@@ -38,11 +40,11 @@ namespace Artemis.API.Controllers
             {
                 City? city = await _cityService.GetByExactNameMatchAsync(createRequest.Name);
 
-                Country? country = await _countryService.GetByIdAsync(createRequest.Country.Id);
+                Country? country = await _countryService.GetByIdAsync(createRequest.Id);
 
                 if (country is null)
                 {
-                    return BadRequest(createRequest.Country);
+                    return BadRequest(createRequest.Id);
                 }
 
                 if (city is not null)
@@ -54,21 +56,18 @@ namespace Artemis.API.Controllers
 
                     city.Countries.Add(country);
 
-                    await _cityService.UpdateCityAsync(city);
-                    await _countryService.UpdateCountryAsync(country);
-
+                    _cityService.UpdateCityAsync(city);
+                    
                     return CreatedAtAction(
                         nameof(GetCityById),
                         new{id = city.Id},
                         city);
                 }
 
-                createRequest.Country = country;
+                city = new(createRequest.Name);
+                city.Countries.Add(country);
 
-                city = new(createRequest);
-
-                await _cityService.CreateCityAsync(city);
-                await _countryService.UpdateCountryAsync(country);
+                _cityService.CreateCityAsync(city);
 
                 return CreatedAtAction(
                     nameof(GetCityById),
@@ -128,7 +127,7 @@ namespace Artemis.API.Controllers
 
                 Country country = new(name);
 
-                await _countryService.CreateCountryAsync(country);
+                _countryService.CreateCountryAsync(country);
 
                 return CreatedAtAction(
                     nameof(GetCountryById),
@@ -188,9 +187,23 @@ namespace Artemis.API.Controllers
                     return Conflict(createRequest.Name);
                 }
 
-                location = new(createRequest);
+                City? city = await _cityService.GetByIdAsync(createRequest.CityId);
 
-                await _locationService.CreateLocationAsync(location);
+                if (city is null)
+                {
+                    return BadRequest(createRequest.CityId);
+                }
+
+                Country? country = await _countryService.GetByIdAsync(createRequest.CountryId);
+
+                if (country is null)
+                {
+                    return BadRequest(createRequest.CountryId);
+                }
+
+                location = new(createRequest.Name, city, country);
+
+                _locationService.CreateLocationAsync(location);
 
                 return CreatedAtAction(
                     nameof(GetLocationById),
@@ -261,7 +274,7 @@ namespace Artemis.API.Controllers
 
                 timeStamp = new(timestamp);
 
-                await _timestampService.CreateTimestampAsync(timeStamp);
+                _timestampService.CreateTimestampAsync(timeStamp);
 
                 return CreatedAtAction(
                     nameof(GetTimestampById),
@@ -299,7 +312,7 @@ namespace Artemis.API.Controllers
 
             if (TryValidateModel(createRequest, nameof(createRequest)))
             {
-                if (createRequest.Shooter.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                if (createRequest.ShooterId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 {
                     if (Match.TotalShots.TryGetValue(createRequest.Type, out int expectedShotTotal))
                     {
@@ -309,9 +322,27 @@ namespace Artemis.API.Controllers
                             {
                                 Match match = creator(createRequest);
 
-                                await _shotService.CreateShotsAsync(match.Shots);
+                                List<Shot> shots = match.Shots;
 
-                                await _matchService.CreateMatchAsync(match);
+                                _shotService.CreateShotsAsync(shots);
+
+                                Timestamp startTimestamp = await _timestampService
+                                    .GetByIdAsync(createRequest.StartTimestampId);
+
+                                Timestamp endTimestamp = await _timestampService
+                                    .GetByIdAsync(createRequest.EndTimestampId);
+
+                                Location location =
+                                    await _locationService.GetByIdAsync(createRequest.LocationId);
+
+                                User shooter = await _userService.GetByIdAsync(createRequest.ShooterId);
+
+                                match.StartTimestamp = startTimestamp;
+                                match.EndTimestamp = endTimestamp;
+                                match.Location = location;
+                                match.Shooter = shooter;
+
+                                _matchService.CreateMatchAsync(match);
 
                                 return CreatedAtAction(
                                     nameof(GetMatchById),
@@ -345,6 +376,7 @@ namespace Artemis.API.Controllers
             if (!match.Shooter.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Unauthorized();
 
+            match.Location = await _locationService.GetByIdAsync(match.Location.Id);
             return Ok(match.CreateDto());
         }
 
@@ -358,12 +390,12 @@ namespace Artemis.API.Controllers
 
             List<Match> matches = await _matchService.GetByUserIdAsync(id);
 
-            return matches.IsNullOrEmpty() ? NotFound(id) : Ok(matches.Convert<MatchRequestDto, Match>());
+            return matches.IsNullOrEmpty() ? NotFound(id) : Ok(matches.Convert<MatchOutputDto, Match>());
         }
 
         [HttpPost, Route("match/update")]
         public async Task<IActionResult> UpdateMatch(
-            [FromBody] MatchRequestDto updateRequest)
+            [FromBody] MatchUpdateRequestDto updateRequest)
         {
             ModelState.ClearValidationState(nameof(updateRequest));
 
@@ -380,13 +412,23 @@ namespace Artemis.API.Controllers
                             if (updateRequest.Shots.Count.Equals(expectedShotTotal))
                             {
                                 if (Match.UpdateMatch.TryGetValue(updateRequest.Type,
-                                        out Func<MatchRequestDto, Match>? creator))
+                                        out Func<MatchUpdateRequestDto, Match>? creator))
                                 {
                                     match = creator(updateRequest);
 
-                                    await _shotService.UpdateShotsAsync(match.Shots);
+                                    match.Shooter = await _userService.GetByIdAsync(updateRequest.ShooterId);
 
-                                    await _matchService.UpdateMatchAsync(match);
+                                    match.StartTimestamp =
+                                        await _timestampService.GetByIdAsync(updateRequest.StartTimestampId);
+
+                                    match.EndTimestamp =
+                                        await _timestampService.GetByIdAsync(updateRequest.EndTimestampId);
+
+                                    match.Location = await _locationService.GetByIdAsync(updateRequest.LocationId);
+
+                                    _shotService.UpdateShotsAsync(match.Shots);
+
+                                    _matchService.UpdateMatchAsync(match);
 
                                     return CreatedAtAction(
                                         nameof(GetMatchById),
@@ -435,23 +477,18 @@ namespace Artemis.API.Controllers
         [HttpDelete, Route("match/multi-delete")]
         public async Task<IActionResult> DeleteMultipleMatches([FromBody] List<string> ids)
         {
-            List<Match?> matches = await _matchService.GetMultipleByIdAsync(ids);
+            List<Match> matches = await _matchService.GetMultipleByIdAsync(ids);
 
-            if (!matches.Contains(null))
+            if (matches.FirstOrDefault(
+                    x => !x!.Shooter.Id.Equals(
+                        User.FindFirstValue(ClaimTypes.NameIdentifier))) is null)
             {
-                if (matches.FirstOrDefault(
-                        x => !x!.Shooter.Id.Equals(
-                            User.FindFirstValue(ClaimTypes.NameIdentifier))) is null)
-                {
-                    await _matchService.DeleteMultipleAsync(matches!);
+                await _matchService.DeleteMultipleAsync(matches);
 
-                    return Ok();
-                }
-
-                return Unauthorized();
+                return Ok();
             }
 
-            return BadRequest(ids[matches.IndexOf(null)]);
+            return Unauthorized();
         }
 
         public DataController(
@@ -460,7 +497,8 @@ namespace Artemis.API.Controllers
             LocationService locationService,
             MatchService matchService,
             ShotService shotService,
-            TimestampService timestampService)
+            TimestampService timestampService,
+            UserService userService)
         {
             this._cityService = cityService;
             this._countryService = countryService;
@@ -468,6 +506,7 @@ namespace Artemis.API.Controllers
             this._matchService = matchService;
             this._shotService = shotService;
             this._timestampService = timestampService;
+            this._userService = userService;
         }
     }
 }

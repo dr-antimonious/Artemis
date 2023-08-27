@@ -20,6 +20,8 @@ namespace Artemis.Data.Db.Configurations
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasIndex(x => x.Name).IsUnique();
+
+            
         }
     }
 }

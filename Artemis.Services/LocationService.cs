@@ -10,7 +10,7 @@ namespace Artemis.Services
         public async Task CreateLocationAsync(Location location)
         {
             await _unitOfWork.Locations.Create(location);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Location?> GetByIdAsync(string id)
@@ -31,7 +31,7 @@ namespace Artemis.Services
         public async Task UpdateLocationAsync(Location location)
         {
             await _unitOfWork.Locations.Update(location);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChangesAsync();
         }
 
         public LocationService(IUnitOfWork unitOfWork)

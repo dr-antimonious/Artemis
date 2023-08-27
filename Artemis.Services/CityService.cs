@@ -10,7 +10,7 @@ namespace Artemis.Services
         public async Task CreateCityAsync(City city)
         {
             await _unitOfWork.Cities.Create(city);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<City?> GetByIdAsync(string id)
@@ -28,7 +28,7 @@ namespace Artemis.Services
         public async Task UpdateCityAsync(City city)
         {
             await _unitOfWork.Cities.Update(city);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChangesAsync();
         }
 
         public CityService(IUnitOfWork unitOfWork)

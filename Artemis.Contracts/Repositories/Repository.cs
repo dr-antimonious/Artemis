@@ -61,5 +61,23 @@ namespace Artemis.Contracts.Repositories
                 }
             }
         }
+
+        protected async Task HandleCancelTask(Task task)
+        {
+            try
+            {
+                await task;
+            }
+            catch (OperationCanceledException e)
+            {
+                try
+                {
+                    Console.WriteLine(e);
+                }
+                catch (IOException)
+                {
+                }
+            }
+        }
     }
 }

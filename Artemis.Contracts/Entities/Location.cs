@@ -39,13 +39,5 @@ namespace Artemis.Contracts.Entities
             this.City = city;
             this.Country = country;
         }
-
-        public Location(LocationCreateRequestDto createRequest)
-            : this(
-                createRequest.Name,
-                createRequest.City,
-                createRequest.Country)
-        {
-        }
     }
 }

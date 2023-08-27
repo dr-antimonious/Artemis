@@ -7,7 +7,7 @@ using Artemis.Contracts.Exceptions;
 
 namespace Artemis.Contracts.Entities.Matches
 {
-    public abstract class Match : IMatch, IConvertable<MatchRequestDto>
+    public abstract class Match : IMatch, IConvertable<MatchOutputDto>
     {
         public static Dictionary<string, int> TotalShots
         {
@@ -41,11 +41,11 @@ namespace Artemis.Contracts.Entities.Matches
             }
         }
 
-        public static Dictionary<string, Func<MatchRequestDto, Match>> UpdateMatch
+        public static Dictionary<string, Func<MatchUpdateRequestDto, Match>> UpdateMatch
         {
             get
             {
-                return new Dictionary<string, Func<MatchRequestDto, Match>>
+                return new Dictionary<string, Func<MatchUpdateRequestDto, Match>>
                 {
                     {"3P50", x => new _3P50Match(x)},
                     {"AP10", x => new AP10Match(x)},
@@ -106,10 +106,10 @@ namespace Artemis.Contracts.Entities.Matches
 
         protected virtual int SeriesInPhase => 6;
 
-        public MatchRequestDto Convert()
+        public MatchOutputDto Convert()
             => CreateDto();
 
-        public MatchRequestDto CreateDto()
+        public MatchOutputDto CreateDto()
             => new(this);
 
         public int GetNumberOfShotsInSeries() => ShotsInSeries;
@@ -257,10 +257,6 @@ namespace Artemis.Contracts.Entities.Matches
         protected Match(MatchCreateRequestDto createRequest)
         {
             Id = Guid.NewGuid().ToString();
-            Shooter = createRequest.Shooter;
-            StartTimestamp = createRequest.StartTimestamp;
-            EndTimestamp = createRequest.EndTimestamp;
-            Location = createRequest.Location;
             AirTemperature = createRequest.AirTemperature;
             AirPressure = createRequest.AirPressure;
             WindSpeed = createRequest.WindSpeed;
@@ -271,21 +267,17 @@ namespace Artemis.Contracts.Entities.Matches
             Shots = createRequest.Shots.Convert<Shot, ShotDto>();
         }
 
-        protected Match(MatchRequestDto matchRequest)
+        protected Match(MatchUpdateRequestDto matchUpdateRequest)
         {
-            Id = matchRequest.Id;
-            Shooter = matchRequest.Shooter;
-            StartTimestamp = matchRequest.StartTimestamp;
-            EndTimestamp = matchRequest.EndTimestamp;
-            Location = matchRequest.Location;
-            AirTemperature = matchRequest.AirTemperature;
-            AirPressure = matchRequest.AirPressure;
-            WindSpeed = matchRequest.WindSpeed;
-            WindDirection = matchRequest.WindDirection;
-            EnvironmentNotes = matchRequest.EnvironmentNotes;
-            EquipmentNotes = matchRequest.EquipmentNotes;
-            ShooterNotes = matchRequest.ShooterNotes;
-            Shots = matchRequest.Shots.Convert<Shot, ExtendedShotDto>();
+            Id = matchUpdateRequest.Id;
+            AirTemperature = matchUpdateRequest.AirTemperature;
+            AirPressure = matchUpdateRequest.AirPressure;
+            WindSpeed = matchUpdateRequest.WindSpeed;
+            WindDirection = matchUpdateRequest.WindDirection;
+            EnvironmentNotes = matchUpdateRequest.EnvironmentNotes;
+            EquipmentNotes = matchUpdateRequest.EquipmentNotes;
+            ShooterNotes = matchUpdateRequest.ShooterNotes;
+            Shots = matchUpdateRequest.Shots.Convert<Shot, ExtendedShotDto>();
         }
     }
 }

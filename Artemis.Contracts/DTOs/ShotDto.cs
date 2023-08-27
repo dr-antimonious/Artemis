@@ -10,6 +10,10 @@ namespace Artemis.Contracts.DTOs
         Range(0.0, 10.9)]
         public double Value { get; set; }
 
+        [Required(ErrorMessage = "Shot position is required"),
+        Range(1, 120)]
+        public int Position { get; set; }
+
         public Timestamp? Timestamp { get; set; }
 
         public double? HorizontalDisplacement { get; set; }
@@ -25,12 +29,14 @@ namespace Artemis.Contracts.DTOs
 
         public ShotDto(
             double value,
+            int position,
             Timestamp? timestamp = null,
             double? horizontalDisplacement = null,
             double? verticalDisplacement = null)
             : this()
         {
             Value = value;
+            Position = position;
             Timestamp = timestamp;
             HorizontalDisplacement = horizontalDisplacement;
             VerticalDisplacement = verticalDisplacement;
@@ -39,6 +45,7 @@ namespace Artemis.Contracts.DTOs
         public ShotDto(Shot shot)
             : this(
                 shot.Value,
+                shot.Position,
                 shot.TimeStamp,
                 shot.HorizontalDisplacement,
                 shot.VerticalDisplacement)

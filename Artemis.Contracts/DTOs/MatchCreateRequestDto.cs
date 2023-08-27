@@ -9,16 +9,16 @@ namespace Artemis.Contracts.DTOs
         public string Type { get; set; }
 
         [Required(ErrorMessage = "Shooter is required")]
-        public User Shooter { get; set; }
+        public string ShooterId { get; set; }
 
         [Required(ErrorMessage = "Start time is required")]
-        public Timestamp StartTimestamp { get; set; }
+        public string StartTimestampId { get; set; }
 
         [Required(ErrorMessage = "End time is required")]
-        public Timestamp EndTimestamp { get; set; }
+        public string EndTimestampId { get; set; }
 
         [Required(ErrorMessage = "Location is required")]
-        public Location Location { get; set; }
+        public string LocationId { get; set; }
 
         [Required(ErrorMessage = "Shots are required")]
         public List<ShotDto> Shots { get; set; }
@@ -56,10 +56,10 @@ namespace Artemis.Contracts.DTOs
             string? shooterNotes = null)
         {
             Type = type;
-            Shooter = shooter;
-            StartTimestamp = startTimestamp;
-            EndTimestamp = endTimestamp;
-            Location = location;
+            ShooterId = shooter.Id;
+            StartTimestampId = startTimestamp.Id;
+            EndTimestampId = endTimestamp.Id;
+            LocationId = location.Id;
             AirTemperature = airTemperature;
             AirPressure = airPressure;
             WindSpeed = windSpeed;

@@ -18,11 +18,13 @@ namespace Artemis.Contracts.DTOs
         public ExtendedShotDto(
             string id,
             double value,
+            int position,
             Timestamp? timestamp = null,
             double? horizontalDisplacement = null,
             double? verticalDisplacement = null)
         : base(
             value,
+            position,
             timestamp,
             horizontalDisplacement,
             verticalDisplacement)
@@ -34,6 +36,7 @@ namespace Artemis.Contracts.DTOs
             : this(
                 shot.Id,
                 shot.Value,
+                shot.Position,
                 shot.TimeStamp,
                 shot.HorizontalDisplacement,
                 shot.VerticalDisplacement)

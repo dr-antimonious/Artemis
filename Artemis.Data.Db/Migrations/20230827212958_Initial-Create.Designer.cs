@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Artemis.Data.Db.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20230827151728_InitialCreate")]
+    [Migration("20230827212958_Initial-Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -161,6 +161,9 @@ namespace Artemis.Data.Db.Migrations
 
                     b.Property<string>("MatchId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
 
                     b.Property<string>("TimeStampId")
                         .HasColumnType("nvarchar(450)");

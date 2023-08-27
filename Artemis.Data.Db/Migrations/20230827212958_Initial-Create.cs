@@ -293,6 +293,7 @@ namespace Artemis.Data.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Position = table.Column<int>(type: "int", nullable: false),
                     TimeStampId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Value = table.Column<double>(type: "float", nullable: false),
                     HorizontalDisplacement = table.Column<double>(type: "float", nullable: true),
