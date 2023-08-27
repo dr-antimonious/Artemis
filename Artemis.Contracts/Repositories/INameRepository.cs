@@ -2,6 +2,8 @@
 {
     public interface INameRepository<T> : IRepository<T> where T : class
     {
-        Task<List<T>> GetByNameAsync(string name);
+        Task<T?> GetByExactNameMatchAsync(string name);
+
+        Task<List<T>> GetByPartialNameMatchAsync(string name);
     }
 }

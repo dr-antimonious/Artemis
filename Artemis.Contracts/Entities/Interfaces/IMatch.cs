@@ -40,17 +40,17 @@ namespace Artemis.Contracts.Entities.Interfaces
 
         int GetNumberOfShots();
 
-        IShot GetShotAt(int index);
+        Shot GetShotAt(int index);
 
-        List<IShot> GetAllShots();
+        List<Shot> GetAllShots();
 
-        void AddShot(IShot shot);
+        void AddShot(Shot shot);
 
-        void AddAllShots(List<IShot> shots);
+        void AddAllShots(List<Shot> shots);
 
-        List<IShot> GetShotsOfSeries(int index);
+        List<Shot> GetShotsOfSeries(int index);
 
-        List<IShot> GetShotsOfPhase(int index);
+        List<Shot> GetShotsOfPhase(int index);
 
         ITuple GetSeriesResults(int index);
 
@@ -66,6 +66,6 @@ namespace Artemis.Contracts.Entities.Interfaces
 
         int GetTotalBullseyeCount();
 
-        int GetBullseyeCountOfShots(List<IShot> shots);
+        int GetBullseyeCountOfShots(List<Shot> shots);
     }
 }

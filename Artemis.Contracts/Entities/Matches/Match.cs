@@ -1,16 +1,81 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using Artemis.Contracts.DTOs;
 using Artemis.Contracts.Entities.Interfaces;
 using Artemis.Contracts.Entities.Managers;
 using Artemis.Contracts.Exceptions;
 
 namespace Artemis.Contracts.Entities.Matches
 {
-    public abstract class Match : IMatch
+    public abstract class Match : IMatch, IConvertable<MatchRequestDto>
     {
+        public static Dictionary<string, int> TotalShots
+        {
+            get
+            {
+                return new Dictionary<string, int>
+                {
+                    {"3P50", 120},
+                    {"AP10", 60},
+                    {"AR10", 60},
+                    {"P25", 60},
+                    {"RFP25", 60},
+                    {"TS", 125}
+                };
+            }
+        }
+
+        public static Dictionary<string, Func<MatchCreateRequestDto, Match>> CreateMatch
+        {
+            get
+            {
+                return new Dictionary<string, Func<MatchCreateRequestDto, Match>>
+                {
+                    {"3P50", x => new _3P50Match(x)},
+                    {"AP10", x => new AP10Match(x)},
+                    {"AR10", x => new AR10Match(x)},
+                    {"P25", x => new P25Match(x)},
+                    {"RFP25", x => new RFP25Match(x)},
+                    {"TS", x => new TSMatch(x)}
+                };
+            }
+        }
+
+        public static Dictionary<string, Func<MatchRequestDto, Match>> UpdateMatch
+        {
+            get
+            {
+                return new Dictionary<string, Func<MatchRequestDto, Match>>
+                {
+                    {"3P50", x => new _3P50Match(x)},
+                    {"AP10", x => new AP10Match(x)},
+                    {"AR10", x => new AR10Match(x)},
+                    {"P25", x => new P25Match(x)},
+                    {"RFP25", x => new RFP25Match(x)},
+                    {"TS", x => new TSMatch(x)}
+                };
+            }
+        }
+
+        public static Dictionary<Type, string> TypeConversion
+        {
+            get
+            {
+                return new Dictionary<Type, string>
+                {
+                    {typeof(_3P50Match), "3P50"},
+                    {typeof(AP10Match), "AP10"},
+                    {typeof(AR10Match), "AR10"},
+                    {typeof(P25Match), "P25"},
+                    {typeof(RFP25Match), "RFP25"},
+                    {typeof(TSMatch), "TS"}
+                };
+            }
+        }
+
         protected virtual IMatchManager Manager => TSMatchManager.Instance;
 
-        protected List<IShot> Shots;
+        public List<Shot> Shots;
 
         [Key]
         public string Id { get; }
@@ -41,6 +106,12 @@ namespace Artemis.Contracts.Entities.Matches
 
         protected virtual int SeriesInPhase => 6;
 
+        public MatchRequestDto Convert()
+            => CreateDto();
+
+        public MatchRequestDto CreateDto()
+            => new(this);
+
         public int GetNumberOfShotsInSeries() => ShotsInSeries;
 
         public virtual int GetNumberOfSeriesInPhase()
@@ -63,20 +134,20 @@ namespace Artemis.Contracts.Entities.Matches
         public virtual int GetNumberOfShots()
             => ShotsInSeries * SeriesInPhase;
 
-        public IShot GetShotAt(int index) => Shots[index];
+        public Shot GetShotAt(int index) => Shots[index];
 
-        public List<IShot> GetAllShots() => new(Shots);
+        public List<Shot> GetAllShots() => new(Shots);
 
-        public void AddShot(IShot shot) => Shots.Add(shot);
+        public void AddShot(Shot shot) => Shots.Add(shot);
 
-        public void AddAllShots(List<IShot> shots) => Shots = shots;
+        public void AddAllShots(List<Shot> shots) => Shots = shots;
 
-        public List<IShot> GetShotsOfSeries(int index)
+        public List<Shot> GetShotsOfSeries(int index)
             => new(Shots.GetRange(
                 ShotsInSeries * index,
                 ShotsInSeries));
 
-        public virtual List<IShot> GetShotsOfPhase(int index)
+        public virtual List<Shot> GetShotsOfPhase(int index)
             => throw new PhasesNotSupportedException(
                 nameof(GetShotsOfPhase),
                 this.GetType().ToString());
@@ -115,7 +186,7 @@ namespace Artemis.Contracts.Entities.Matches
                 nameof(GetTotalBullseyeCount),
                 this.GetType().ToString());
 
-        public virtual int GetBullseyeCountOfShots(List<IShot> shots)
+        public virtual int GetBullseyeCountOfShots(List<Shot> shots)
             => throw new BullseyeNotSupportedException(
                 nameof(GetBullseyeCountOfShots),
                 this.GetType().ToString());
@@ -159,7 +230,7 @@ namespace Artemis.Contracts.Entities.Matches
             Timestamp startTimestamp,
             Timestamp endTimestamp,
             Location location,
-            List<IShot> shots,
+            List<Shot> shots,
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
@@ -181,6 +252,40 @@ namespace Artemis.Contracts.Entities.Matches
             EquipmentNotes = equipmentNotes;
             ShooterNotes = shooterNotes;
             Shots = shots;
+        }
+
+        protected Match(MatchCreateRequestDto createRequest)
+        {
+            Id = Guid.NewGuid().ToString();
+            Shooter = createRequest.Shooter;
+            StartTimestamp = createRequest.StartTimestamp;
+            EndTimestamp = createRequest.EndTimestamp;
+            Location = createRequest.Location;
+            AirTemperature = createRequest.AirTemperature;
+            AirPressure = createRequest.AirPressure;
+            WindSpeed = createRequest.WindSpeed;
+            WindDirection = createRequest.WindDirection;
+            EnvironmentNotes = createRequest.EnvironmentNotes;
+            EquipmentNotes = createRequest.EquipmentNotes;
+            ShooterNotes = createRequest.ShooterNotes;
+            Shots = createRequest.Shots.Convert<Shot, ShotDto>();
+        }
+
+        protected Match(MatchRequestDto matchRequest)
+        {
+            Id = matchRequest.Id;
+            Shooter = matchRequest.Shooter;
+            StartTimestamp = matchRequest.StartTimestamp;
+            EndTimestamp = matchRequest.EndTimestamp;
+            Location = matchRequest.Location;
+            AirTemperature = matchRequest.AirTemperature;
+            AirPressure = matchRequest.AirPressure;
+            WindSpeed = matchRequest.WindSpeed;
+            WindDirection = matchRequest.WindDirection;
+            EnvironmentNotes = matchRequest.EnvironmentNotes;
+            EquipmentNotes = matchRequest.EquipmentNotes;
+            ShooterNotes = matchRequest.ShooterNotes;
+            Shots = matchRequest.Shots.Convert<Shot, ExtendedShotDto>();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Artemis.Contracts.Entities.Managers
 
         public override ITuple GetSeriesResults(IMatch match, int index)
         {
-            List<IShot> shots = match.GetShotsOfSeries(index);
+            List<Shot> shots = match.GetShotsOfSeries(index);
             return new Tuple<int, double?, int?>(
                 IntegerSeries(shots),
                 null,

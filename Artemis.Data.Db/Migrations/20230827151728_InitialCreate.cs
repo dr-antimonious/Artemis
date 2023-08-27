@@ -237,33 +237,11 @@ namespace Artemis.Data.Db.Migrations
                         name: "FK_Locations_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Locations_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Shots",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TimeStampId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<double>(type: "float", nullable: false),
-                    HorizontalDisplacement = table.Column<double>(type: "float", nullable: true),
-                    VerticalDisplacement = table.Column<double>(type: "float", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shots", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Shots_Timestamps_TimeStampId",
-                        column: x => x.TimeStampId,
-                        principalTable: "Timestamps",
                         principalColumn: "Id");
                 });
 
@@ -292,26 +270,48 @@ namespace Artemis.Data.Db.Migrations
                         name: "FK_Matches_AspNetUsers_ShooterId",
                         column: x => x.ShooterId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Matches_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Matches_Timestamps_EndTimestampId",
                         column: x => x.EndTimestampId,
                         principalTable: "Timestamps",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Matches_Timestamps_StartTimestampId",
                         column: x => x.StartTimestampId,
                         principalTable: "Timestamps",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shots",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TimeStampId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Value = table.Column<double>(type: "float", nullable: false),
+                    HorizontalDisplacement = table.Column<double>(type: "float", nullable: true),
+                    VerticalDisplacement = table.Column<double>(type: "float", nullable: true),
+                    MatchId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shots", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shots_Matches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Matches",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Shots_Timestamps_TimeStampId",
+                        column: x => x.TimeStampId,
+                        principalTable: "Timestamps",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -413,6 +413,11 @@ namespace Artemis.Data.Db.Migrations
                 column: "StartTimestampId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Shots_MatchId",
+                table: "Shots",
+                column: "MatchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Shots_TimeStampId",
                 table: "Shots",
                 column: "TimeStampId");
@@ -446,13 +451,13 @@ namespace Artemis.Data.Db.Migrations
                 name: "CityCountry");
 
             migrationBuilder.DropTable(
-                name: "Matches");
-
-            migrationBuilder.DropTable(
                 name: "Shots");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Matches");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

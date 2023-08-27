@@ -156,6 +156,9 @@ namespace Artemis.Data.Db.Migrations
                     b.Property<double?>("HorizontalDisplacement")
                         .HasColumnType("float");
 
+                    b.Property<string>("MatchId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("TimeStampId")
                         .HasColumnType("nvarchar(450)");
 
@@ -166,6 +169,8 @@ namespace Artemis.Data.Db.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
 
                     b.HasIndex("TimeStampId");
 
@@ -473,13 +478,11 @@ namespace Artemis.Data.Db.Migrations
                     b.HasOne("Artemis.Contracts.Entities.City", "City")
                         .WithMany("Locations")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Artemis.Contracts.Entities.Country", "Country")
                         .WithMany("Locations")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -492,25 +495,22 @@ namespace Artemis.Data.Db.Migrations
                     b.HasOne("Artemis.Contracts.Entities.Timestamp", "EndTimestamp")
                         .WithMany()
                         .HasForeignKey("EndTimestampId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Artemis.Contracts.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Artemis.Contracts.Entities.User", "Shooter")
                         .WithMany("Matches")
                         .HasForeignKey("ShooterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Artemis.Contracts.Entities.Timestamp", "StartTimestamp")
                         .WithMany()
                         .HasForeignKey("StartTimestampId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("EndTimestamp");
@@ -524,6 +524,11 @@ namespace Artemis.Data.Db.Migrations
 
             modelBuilder.Entity("Artemis.Contracts.Entities.Shot", b =>
                 {
+                    b.HasOne("Artemis.Contracts.Entities.Matches.Match", null)
+                        .WithMany("Shots")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
                     b.HasOne("Artemis.Contracts.Entities.Timestamp", "TimeStamp")
                         .WithMany()
                         .HasForeignKey("TimeStampId");
@@ -605,6 +610,11 @@ namespace Artemis.Data.Db.Migrations
             modelBuilder.Entity("Artemis.Contracts.Entities.Country", b =>
                 {
                     b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("Artemis.Contracts.Entities.Matches.Match", b =>
+                {
+                    b.Navigation("Shots");
                 });
 
             modelBuilder.Entity("Artemis.Contracts.Entities.User", b =>

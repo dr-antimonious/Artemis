@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Artemis.Contracts.Entities.Interfaces;
+using Artemis.Contracts.DTOs;
 
 namespace Artemis.Contracts.Entities.Matches
 {
@@ -19,7 +19,7 @@ namespace Artemis.Contracts.Entities.Matches
 
         public override int GetNumberOfShots() => ShotsInSeries * SeriesInPhase * PhasesInMatch;
 
-        public override List<IShot> GetShotsOfPhase(int index)
+        public override List<Shot> GetShotsOfPhase(int index)
             => new(Shots.GetRange(
                 SeriesInPhase * ShotsInSeries * index,
                 ShotsInSeries * SeriesInPhase));
@@ -80,7 +80,7 @@ namespace Artemis.Contracts.Entities.Matches
             Timestamp startTimestamp,
             Timestamp endTimestamp,
             Location location,
-            List<IShot> shots,
+            List<Shot> shots,
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
@@ -102,6 +102,16 @@ namespace Artemis.Contracts.Entities.Matches
                 environmentNotes,
                 equipmentNotes,
                 shooterNotes)
+        {
+        }
+
+        protected PhasedBullseyeMatch(MatchCreateRequestDto createRequest)
+            : base(createRequest)
+        {
+        }
+
+        protected PhasedBullseyeMatch(MatchRequestDto matchRequest)
+            : base(matchRequest)
         {
         }
     }

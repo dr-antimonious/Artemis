@@ -26,7 +26,9 @@ namespace Artemis.Data.Db.Configurations
 
             builder.Property(x => x.PasswordHash);
 
-            builder.HasMany(x => x.Matches).WithOne(y => y.Shooter);
+            builder.HasMany(x => x.Matches)
+                .WithOne(y => y.Shooter)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasIndex(x => x.Email).IsUnique();
         }

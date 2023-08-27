@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Artemis.Contracts.DTOs;
 using Artemis.Contracts.Entities.Interfaces;
 
 namespace Artemis.Contracts.Entities
 {
-    public class Shot : IShot
+    public class Shot : IConvertable<ExtendedShotDto>
     {
         [Key]
         public string Id { get; }
@@ -16,6 +17,9 @@ namespace Artemis.Contracts.Entities
         public double? HorizontalDisplacement { get; set; }
 
         public double? VerticalDisplacement { get; set; }
+
+        public ExtendedShotDto Convert()
+            => new(this);
 
         public Shot()
         {
@@ -47,6 +51,25 @@ namespace Artemis.Contracts.Entities
             this.Value = value;
             this.HorizontalDisplacement = horizontalDisplacement;
             this.VerticalDisplacement = verticalDisplacement;
+        }
+
+        public Shot(ShotDto dto)
+            : this(
+                dto.Value,
+                dto.Timestamp,
+                dto.HorizontalDisplacement,
+                dto.VerticalDisplacement)
+        {
+        }
+
+        public Shot(ExtendedShotDto dto)
+            : this(
+                dto.Id,
+                dto.Value,
+                dto.Timestamp,
+                dto.HorizontalDisplacement,
+                dto.VerticalDisplacement)
+        {
         }
     }
 }

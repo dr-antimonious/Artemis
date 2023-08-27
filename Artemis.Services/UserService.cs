@@ -16,8 +16,8 @@ namespace Artemis.Services
             List<Claim> claims = new()
             {
                 new(ClaimTypes.Email, user.Email),
-                new("Full name", user.FullName),
-                new("Id", user.Id),
+                new(ClaimTypes.Name, user.FullName),
+                new(ClaimTypes.NameIdentifier, user.Id),
             };
 
             return await _tokenGenerator.GenerateToken(claims);

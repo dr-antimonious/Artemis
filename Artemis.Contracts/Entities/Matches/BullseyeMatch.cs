@@ -1,4 +1,4 @@
-﻿using Artemis.Contracts.Entities.Interfaces;
+﻿using Artemis.Contracts.DTOs;
 
 namespace Artemis.Contracts.Entities.Matches
 {
@@ -9,7 +9,7 @@ namespace Artemis.Contracts.Entities.Matches
         public override int GetTotalBullseyeCount()
             => Shots.Count(x => x.Value >= BullseyeMinimum);
 
-        public override int GetBullseyeCountOfShots(List<IShot> shots)
+        public override int GetBullseyeCountOfShots(List<Shot> shots)
             => shots.Count(x => x.Value >= BullseyeMinimum);
 
         protected BullseyeMatch() : base()
@@ -49,7 +49,7 @@ namespace Artemis.Contracts.Entities.Matches
             Timestamp startTimestamp,
             Timestamp endTimestamp,
             Location location,
-            List<IShot> shots,
+            List<Shot> shots,
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
@@ -71,6 +71,16 @@ namespace Artemis.Contracts.Entities.Matches
                 environmentNotes,
                 equipmentNotes,
                 shooterNotes)
+        {
+        }
+
+        protected BullseyeMatch(MatchCreateRequestDto createRequest)
+            : base(createRequest)
+        {
+        }
+
+        protected BullseyeMatch(MatchRequestDto matchRequest)
+            : base(matchRequest)
         {
         }
     }

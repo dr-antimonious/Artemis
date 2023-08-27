@@ -1,4 +1,5 @@
-﻿using Artemis.Contracts.Entities.Interfaces;
+﻿using Artemis.Contracts.DTOs;
+using Artemis.Contracts.Entities.Interfaces;
 using Artemis.Contracts.Entities.Managers;
 
 namespace Artemis.Contracts.Entities.Matches
@@ -48,7 +49,7 @@ namespace Artemis.Contracts.Entities.Matches
             Timestamp startTimestamp,
             Timestamp endTimestamp,
             Location location,
-            List<IShot> shots,
+            List<Shot> shots,
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
@@ -70,6 +71,16 @@ namespace Artemis.Contracts.Entities.Matches
                 environmentNotes,
                 equipmentNotes,
                 shooterNotes)
+        {
+        }
+
+        public _3P50Match(MatchCreateRequestDto createRequest)
+            : base(createRequest)
+        {
+        }
+
+        public _3P50Match(MatchRequestDto matchRequest)
+            : base(matchRequest)
         {
         }
     }

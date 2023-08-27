@@ -27,9 +27,13 @@ namespace Artemis.Data.Db.Repositories
             => await HandleNullCancelTask(_locations.Where(
                 x => x.Country.Name.Equals(country)).ToListAsync());
 
-        public async Task<List<Location>> GetByNameAsync(string name)
+        public async Task<List<Location>> GetByPartialNameMatchAsync(string name)
             => await HandleNullCancelTask(_locations.Where(
-                x => x.Name.Equals(name)).ToListAsync());
+                x => x.Name.Contains(name)).ToListAsync());
+
+        public async Task<Location?> GetByExactNameMatchAsync(string name)
+            => await HandleNullCancelTask(_locations.FirstOrDefaultAsync(
+                x => x.Name.Equals(name)));
 
         public async Task Update(Location entity)
             => await Task.Run(() => _locations.Update(entity));

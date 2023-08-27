@@ -16,7 +16,8 @@ namespace Artemis.Data.Db.Configurations
                 .WithMany(y => y.Countries);
 
             builder.HasMany(x => x.Locations)
-                .WithOne(y => y.Country);
+                .WithOne(y => y.Country)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasIndex(x => x.Name).IsUnique();
         }

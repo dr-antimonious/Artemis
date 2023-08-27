@@ -10,17 +10,25 @@ namespace Artemis.Data.Db.Configurations
         {
             builder.HasKey(x => x.Id);
 
+            builder.HasMany(x => x.Shots)
+                .WithOne()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
             builder.HasOne(x => x.Shooter)
-                .WithMany(y => y.Matches);
+                .WithMany(y => y.Matches)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(x => x.StartTimestamp)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(x => x.EndTimestamp)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(x => x.Location)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Property(x => x.AirTemperature);
 

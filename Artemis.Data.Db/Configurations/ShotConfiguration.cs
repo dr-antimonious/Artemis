@@ -11,7 +11,8 @@ namespace Artemis.Data.Db.Configurations
             builder.HasKey(x => x.Id);
 
             builder.HasOne(x => x.TimeStamp)
-                .WithMany();
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Property(x => x.Value).IsRequired();
 

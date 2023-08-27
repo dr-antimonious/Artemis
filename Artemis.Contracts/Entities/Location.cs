@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Artemis.Contracts.DTOs;
 
 namespace Artemis.Contracts.Entities
 {
@@ -37,6 +38,14 @@ namespace Artemis.Contracts.Entities
             this.Name = name;
             this.City = city;
             this.Country = country;
+        }
+
+        public Location(LocationCreateRequestDto createRequest)
+            : this(
+                createRequest.Name,
+                createRequest.City,
+                createRequest.Country)
+        {
         }
     }
 }

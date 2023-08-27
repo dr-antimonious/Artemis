@@ -45,9 +45,7 @@ namespace Artemis.API
                                     Id = JwtBearerDefaults.AuthenticationScheme,
                                 },
                             },
-                            new string[]
-                            {
-                            }
+                            Array.Empty<string>()
                         },
                     });
             });
@@ -56,7 +54,7 @@ namespace Artemis.API
                 opt =>
                 {
                     opt.UseSqlServer(
-                        "",
+                        "Server=162.0.233.165,12345;Initial catalog=ArtemisTestDb;User Id=sa;Password=m7jay7hYVT7@;TrustServerCertificate=True",
                         op => op.MigrationsAssembly("Artemis.Data.Db"));
                 });
 
@@ -77,6 +75,20 @@ namespace Artemis.API
             services.AddScoped<IUnitOfWork, DefaultUnitOfWork>();
 
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+            services.AddScoped<CityService>();
+
+            services.AddScoped<CountryService>();
+
+            services.AddScoped<LocationService>();
+
+            services.AddScoped<MatchService>();
+
+            services.AddScoped<ShotService>();
+
+            services.AddScoped<TimestampService>();
+
+            services.AddScoped<UserService>();
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

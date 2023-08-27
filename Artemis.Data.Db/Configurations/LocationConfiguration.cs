@@ -13,10 +13,12 @@ namespace Artemis.Data.Db.Configurations
             builder.Property(x => x.Name).IsRequired();
 
             builder.HasOne(x => x.City)
-                .WithMany(y => y.Locations);
+                .WithMany(y => y.Locations)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(x => x.Country)
-                .WithMany(y => y.Locations);
+                .WithMany(y => y.Locations)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasIndex(x => x.Name).IsUnique();
         }

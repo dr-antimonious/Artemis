@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Artemis.Contracts.DTOs;
 using Artemis.Contracts.Entities.Matches;
 using Microsoft.AspNetCore.Identity;
 
@@ -37,6 +38,27 @@ namespace Artemis.Contracts.Entities
 
         public string FullName => $"{FirstName} {AdditionalNames} {LastName}";
 
+        public void UpdateValues(UserUpdateRequestDto updateRequest)
+        {
+            this.FirstName = updateRequest.FirstName;
+            this.AdditionalNames = updateRequest.AdditionalNames;
+            this.LastName = updateRequest.LastName;
+            this.DateOfBirth = updateRequest.DateOfBirth;
+            this.Gender = updateRequest.Gender;
+            this.Email = updateRequest.Email;
+            this.PhoneNumber = updateRequest.PhoneNumber;
+        }
+
+        public UserDto CreateDto()
+            => new(Id,
+                FirstName,
+                AdditionalNames,
+                LastName,
+                DateOfBirth,
+                Gender,
+                Email,
+                PhoneNumber);
+
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
@@ -62,6 +84,19 @@ namespace Artemis.Contracts.Entities
             this.Email = email;
             this.PhoneNumber = phoneNumber;
             this.PasswordHash = passwordHash;
+        }
+
+        public User(RegistrationRequestDto registrationRequest)
+            : this(
+                registrationRequest.FirstName,
+                registrationRequest.AdditionalNames,
+                registrationRequest.LastName,
+                registrationRequest.DateOfBirth,
+                registrationRequest.Gender,
+                registrationRequest.Email,
+                registrationRequest.PhoneNumber,
+                registrationRequest.PasswordHash)
+        {
         }
 
         public User(
