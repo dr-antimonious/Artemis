@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Artemis.API.Controllers
 {
-    [Authorize, ApiController, Route("host/artemis/data")]
+    [Authorize, ApiController, Route("artemis/data")]
     public class DataController : ControllerBase
     {
         private readonly CityService _cityService;

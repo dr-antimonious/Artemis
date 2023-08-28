@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Artemis.API.Controllers
 {
-    [ApiController, Route("host/artemis/auth")]
+    [ApiController, Route("artemis/auth")]
     public class AuthenticationController : ControllerBase
     {
         private readonly UserService _userService;
