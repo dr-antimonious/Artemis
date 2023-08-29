@@ -12,7 +12,11 @@ namespace Artemis.API.Controllers
     {
         private readonly UserService _userService;
 
-        [HttpPost, Route("login")]
+        [HttpPost, Route("login"),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status401Unauthorized),
+        ProducesResponseType(StatusCodes.Status200OK),
+        ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             ModelState.ClearValidationState(nameof(loginRequest));
@@ -33,7 +37,10 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpPost, Route("register")]
+        [HttpPost, Route("register"),
+        ProducesResponseType(StatusCodes.Status409Conflict),
+        ProducesResponseType(StatusCodes.Status201Created),
+        ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDto registrationRequest)
         {
             ModelState.ClearValidationState(nameof(registrationRequest));
@@ -56,7 +63,12 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [Authorize, HttpPost, Route("update")]
+        [Authorize, HttpPost, Route("update"),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status401Unauthorized),
+        ProducesResponseType(StatusCodes.Status409Conflict),
+        ProducesResponseType(StatusCodes.Status200OK),
+        ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update([FromBody] UserUpdateRequestDto updateRequest)
         {
             ModelState.ClearValidationState(nameof(updateRequest));
@@ -85,7 +97,12 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [Authorize, HttpDelete, Route("delete")]
+        [Authorize, HttpDelete, Route("delete"),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status409Conflict),
+        ProducesResponseType(StatusCodes.Status401Unauthorized),
+        ProducesResponseType(StatusCodes.Status200OK),
+        ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromBody] UserDeleteRequestDto deleteRequest)
         {
             ModelState.ClearValidationState(nameof(deleteRequest));
@@ -111,7 +128,10 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [Authorize, HttpGet, Route("get-user/by-id")]
+        [Authorize, HttpGet, Route("get-user/by-id"),
+        ProducesResponseType(StatusCodes.Status401Unauthorized),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById()
         {
             string? id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -124,7 +144,10 @@ namespace Artemis.API.Controllers
             return user is null ? NotFound(id) : Ok(user.CreateDto());
         }
 
-        [Authorize, HttpGet, Route("get-user/by-email")]
+        [Authorize, HttpGet, Route("get-user/by-email"),
+        ProducesResponseType(StatusCodes.Status401Unauthorized),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByEmail()
         {
             string? email = User.FindFirstValue(ClaimTypes.Email);

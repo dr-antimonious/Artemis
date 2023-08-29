@@ -48,13 +48,26 @@ namespace Artemis.API
                             Array.Empty<string>()
                         },
                     });
+
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Artemis - by Advance Ventures",
+                    Description = "An ASP.NET Core Web API for shooting result management.",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "leotumbas@gmail.com",
+                        Name = "Leo Tumbas",
+                        Url = new("https://github.com/antimonious/Artemis")
+                    }
+                });
             });
 
             services.AddDbContext<IdentityDbContext<User, IdentityRole<string>, string>, DefaultDbContext>(
                 opt =>
                 {
                     opt.UseSqlServer(
-                        "Server=162.0.233.165,12345;Initial catalog=ArtemisTestDb;User Id=sa;Password=m7jay7hYVT7@;TrustServerCertificate=True",
+                        "Server=162.0.233.165,5000;Initial catalog=ArtemisTestDb;User Id=sa;Password=m7jay7hYVT7@;TrustServerCertificate=True",
                         op => op.MigrationsAssembly("Artemis.Data.Db"));
                 });
 

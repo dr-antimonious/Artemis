@@ -30,7 +30,11 @@ namespace Artemis.API.Controllers
 
         // City service routes
 
-        [HttpPost, Route("city/add")]
+        [HttpPost, Route("city/add"),
+        ProducesResponseType(StatusCodes.Status400BadRequest),
+        ProducesResponseType(StatusCodes.Status409Conflict),
+        ProducesResponseType(StatusCodes.Status201Created),
+        ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateCity(
             [FromBody] CityCreateRequestDto createRequest)
         {
@@ -78,7 +82,9 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpGet, Route("city/get/by-id")]
+        [HttpGet, Route("city/get/by-id"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCityById([FromQuery] string id)
         {
             City? city = await _cityService.GetByIdAsync(id);
@@ -86,7 +92,9 @@ namespace Artemis.API.Controllers
             return city is null ? NotFound(id) : Ok(city);
         }
 
-        [HttpGet, Route("city/get/by-country")]
+        [HttpGet, Route("city/get/by-country"),
+        ProducesResponseType(StatusCodes.Status404NotFound),
+        ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCityByCountry([FromQuery] string country)
         {
             List<City> cities = await _cityService.GetByCountryNameAsync(country);
@@ -94,7 +102,9 @@ namespace Artemis.API.Controllers
             return cities.IsNullOrEmpty() ? NotFound(country) : Ok(cities);
         }
 
-        [HttpGet, Route("city/get/by-partial")]
+        [HttpGet, Route("city/get/by-partial"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCityByPartialMatch([FromQuery] string partialName)
         {
             List<City> cities = await _cityService.GetByPartialNameMatchAsync(partialName);
@@ -102,7 +112,9 @@ namespace Artemis.API.Controllers
             return cities.IsNullOrEmpty() ? NotFound(partialName) : Ok(cities);
         }
 
-        [HttpGet, Route("city/get/by-exact")]
+        [HttpGet, Route("city/get/by-exact"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCityByExactMatch([FromQuery] string name)
         {
             City? city = await _cityService.GetByExactNameMatchAsync(name);
@@ -112,7 +124,10 @@ namespace Artemis.API.Controllers
 
         // Country service routes
 
-        [HttpPost, Route("country/add")]
+        [HttpPost, Route("country/add"),
+         ProducesResponseType(StatusCodes.Status409Conflict),
+         ProducesResponseType(StatusCodes.Status201Created),
+         ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateCountry(
             [FromBody, Required(ErrorMessage = "Country name is required")]
             string name)
@@ -138,7 +153,9 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpGet, Route("country/get/by-id")]
+        [HttpGet, Route("country/get/by-id"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCountryById([FromQuery] string id)
         {
             Country? country = await _countryService.GetByIdAsync(id);
@@ -146,7 +163,9 @@ namespace Artemis.API.Controllers
             return country is null ? NotFound(id) : Ok(country);
         }
 
-        [HttpGet, Route("country/get/by-city")]
+        [HttpGet, Route("country/get/by-city"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCountryByCity([FromQuery] string city)
         {
             List<Country> countries = await _countryService.GetByCityNameAsync(city);
@@ -154,7 +173,9 @@ namespace Artemis.API.Controllers
             return countries.IsNullOrEmpty() ? NotFound(city) : Ok(countries);
         }
 
-        [HttpGet, Route("country/get/by-partial")]
+        [HttpGet, Route("country/get/by-partial"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCountryByPartial([FromQuery] string partialName)
         {
             List<Country> countries = await _countryService.GetByPartialNameMatchAsync(partialName);
@@ -162,7 +183,9 @@ namespace Artemis.API.Controllers
             return countries.IsNullOrEmpty() ? NotFound(partialName) : Ok(countries);
         }
 
-        [HttpGet, Route("country/get/by-exact")]
+        [HttpGet, Route("country/get/by-exact"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCountryByExact([FromQuery] string name)
         {
             Country? country = await _countryService.GetByExactNameMatchAsync(name);
@@ -172,7 +195,10 @@ namespace Artemis.API.Controllers
 
         // Location service routes
 
-        [HttpPost, Route("location/add")]
+        [HttpPost, Route("location/add"),
+         ProducesResponseType(StatusCodes.Status409Conflict),
+         ProducesResponseType(StatusCodes.Status400BadRequest),
+         ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateLocation(
             [FromBody] LocationCreateRequestDto createRequest)
         {
@@ -214,7 +240,9 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpGet, Route("location/get/by-id")]
+        [HttpGet, Route("location/get/by-id"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLocationById([FromQuery] string id)
         {
             Location? location = await _locationService.GetByIdAsync(id);
@@ -222,7 +250,9 @@ namespace Artemis.API.Controllers
             return location is null ? NotFound(id) : Ok(location);
         }
 
-        [HttpGet, Route("location/get/by-city")]
+        [HttpGet, Route("location/get/by-city"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLocationByCity([FromQuery] string city)
         {
             List<Location> locations = await _locationService.GetByCityNameAsync(city);
@@ -230,7 +260,9 @@ namespace Artemis.API.Controllers
             return locations.IsNullOrEmpty() ? NotFound(city) : Ok(locations);
         }
 
-        [HttpGet, Route("location/get/by-country")]
+        [HttpGet, Route("location/get/by-country"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLocationByCountry([FromQuery] string country)
         {
             List<Location> locations = await _locationService.GetByCountryNameAsync(country);
@@ -238,7 +270,9 @@ namespace Artemis.API.Controllers
             return locations.IsNullOrEmpty() ? NotFound(country) : Ok(locations);
         }
 
-        [HttpGet, Route("location/get/by-partial")]
+        [HttpGet, Route("location/get/by-partial"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLocationByPartial([FromQuery] string partialName)
         {
             List<Location> locations = await _locationService.GetByPartialNameMatchAsync(partialName);
@@ -246,7 +280,9 @@ namespace Artemis.API.Controllers
             return locations.IsNullOrEmpty() ? NotFound(partialName) : Ok(locations);
         }
 
-        [HttpGet, Route("location/get/by-exact")]
+        [HttpGet, Route("location/get/by-exact"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLocationByExact([FromQuery] string name)
         {
             Location? location = await _locationService.GetByExactNameMatchAsync(name);
@@ -256,7 +292,10 @@ namespace Artemis.API.Controllers
 
         // Timestamp service routes
 
-        [HttpPost, Route("timestamp/add")]
+        [HttpPost, Route("timestamp/add"),
+         ProducesResponseType(StatusCodes.Status409Conflict),
+         ProducesResponseType(StatusCodes.Status201Created),
+         ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateTimestamp(
             [FromBody, Required(ErrorMessage = "Timestamp is required")]
             DateTime timestamp)
@@ -285,7 +324,9 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpGet, Route("timestamp/get/by-id")]
+        [HttpGet, Route("timestamp/get/by-id"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTimestampById([FromQuery] string id)
         {
             Timestamp? timestamp = await _timestampService.GetByIdAsync(id);
@@ -293,7 +334,9 @@ namespace Artemis.API.Controllers
             return timestamp is null ? NotFound(id) : Ok(timestamp);
         }
 
-        [HttpGet, Route("timestamp/get/by-timestamp")]
+        [HttpGet, Route("timestamp/get/by-timestamp"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTimestampByTimestamp([FromBody] DateTime timestamp)
         {
             Timestamp? timeStamp = await _timestampService.GetByTimestampAsync(timestamp);
@@ -303,7 +346,10 @@ namespace Artemis.API.Controllers
 
         // Match service routes
 
-        [HttpPost, Route("match/add")]
+        [HttpPost, Route("match/add"),
+         ProducesResponseType(StatusCodes.Status201Created),
+         ProducesResponseType(StatusCodes.Status400BadRequest),
+         ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CreateMatch(
             [FromBody] MatchCreateRequestDto createRequest
         )
@@ -365,7 +411,10 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpGet, Route("match/get/by-id")]
+        [HttpGet, Route("match/get/by-id"),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status401Unauthorized),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMatchById([FromQuery] string id)
         {
             Match? match = await _matchService.GetByIdAsync(id);
@@ -380,7 +429,10 @@ namespace Artemis.API.Controllers
             return Ok(match.CreateDto());
         }
 
-        [HttpGet, Route("match/get/by-user")]
+        [HttpGet, Route("match/get/by-user"),
+         ProducesResponseType(StatusCodes.Status401Unauthorized),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMatchByUser()
         {
             string? id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -393,7 +445,11 @@ namespace Artemis.API.Controllers
             return matches.IsNullOrEmpty() ? NotFound(id) : Ok(matches.Convert<MatchOutputDto, Match>());
         }
 
-        [HttpPost, Route("match/update")]
+        [HttpPost, Route("match/update"),
+         ProducesResponseType(StatusCodes.Status201Created),
+         ProducesResponseType(StatusCodes.Status400BadRequest),
+         ProducesResponseType(StatusCodes.Status401Unauthorized),
+         ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateMatch(
             [FromBody] MatchUpdateRequestDto updateRequest)
         {
@@ -454,7 +510,10 @@ namespace Artemis.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-        [HttpDelete, Route("match/delete")]
+        [HttpDelete, Route("match/delete"),
+         ProducesResponseType(StatusCodes.Status200OK),
+         ProducesResponseType(StatusCodes.Status401Unauthorized),
+         ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteMatch([FromQuery] string id)
         {
             Match? match = await _matchService.GetByIdAsync(id);
@@ -474,7 +533,9 @@ namespace Artemis.API.Controllers
             return NotFound(id);
         }
 
-        [HttpDelete, Route("match/multi-delete")]
+        [HttpDelete, Route("match/multi-delete"),
+         ProducesResponseType(StatusCodes.Status200OK),
+         ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteMultipleMatches([FromBody] List<string> ids)
         {
             List<Match> matches = await _matchService.GetMultipleByIdAsync(ids);
@@ -489,6 +550,12 @@ namespace Artemis.API.Controllers
             }
 
             return Unauthorized();
+        }
+
+        [AllowAnonymous, HttpGet, Route("test-connection")]
+        public IActionResult Test([FromQuery] string test)
+        {
+            return Ok(test);
         }
 
         public DataController(
