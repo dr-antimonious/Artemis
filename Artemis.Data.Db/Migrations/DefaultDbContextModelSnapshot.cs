@@ -125,8 +125,8 @@ namespace Artemis.Data.Db.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("WindDirection")
-                        .HasColumnType("int");
+                    b.Property<string>("WindDirection")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("WindSpeed")
                         .HasColumnType("float");

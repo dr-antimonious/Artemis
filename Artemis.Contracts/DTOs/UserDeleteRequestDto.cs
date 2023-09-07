@@ -6,5 +6,9 @@ namespace Artemis.Contracts.DTOs
     {
         [Required(ErrorMessage = "User ID is required")]
         public string Id { get; set; }
+
+        public UserDeleteRequestDto() : base()
+        {
+        }
     }
 }

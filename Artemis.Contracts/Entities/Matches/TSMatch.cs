@@ -21,7 +21,7 @@ namespace Artemis.Contracts.Entities.Matches
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)
@@ -50,7 +50,7 @@ namespace Artemis.Contracts.Entities.Matches
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)
@@ -78,6 +78,11 @@ namespace Artemis.Contracts.Entities.Matches
 
         public TSMatch(MatchUpdateRequestDto matchUpdateRequest)
             : base(matchUpdateRequest)
+        {
+        }
+
+        public TSMatch(MatchOutputDto matchOutput)
+            : base(matchOutput)
         {
         }
     }

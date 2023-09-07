@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Artemis.Data.Db.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20230827212958_Initial-Create")]
+    [Migration("20230902185303_Initial-Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -128,8 +128,8 @@ namespace Artemis.Data.Db.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("WindDirection")
-                        .HasColumnType("int");
+                    b.Property<string>("WindDirection")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("WindSpeed")
                         .HasColumnType("float");

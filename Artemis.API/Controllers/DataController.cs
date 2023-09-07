@@ -55,12 +55,12 @@ namespace Artemis.API.Controllers
                 {
                     if (city.Countries.Contains(country))
                     {
-                        return Conflict(country);
+                        return Conflict(city);
                     }
 
                     city.Countries.Add(country);
 
-                    _cityService.UpdateCityAsync(city);
+                    await _cityService.UpdateCityAsync(city);
                     
                     return CreatedAtAction(
                         nameof(GetCityById),
@@ -69,9 +69,10 @@ namespace Artemis.API.Controllers
                 }
 
                 city = new(createRequest.Name);
+                country.Cities.Add(city);
                 city.Countries.Add(country);
 
-                _cityService.CreateCityAsync(city);
+                await _cityService.CreateCityAsync(city);
 
                 return CreatedAtAction(
                     nameof(GetCityById),
@@ -138,11 +139,11 @@ namespace Artemis.API.Controllers
             {
                 if ((await _countryService.GetByExactNameMatchAsync(name))
                     is not null) 
-                    return Conflict(name);
+                    return Conflict(await _countryService.GetByExactNameMatchAsync(name));
 
                 Country country = new(name);
 
-                _countryService.CreateCountryAsync(country);
+                await _countryService.CreateCountryAsync(country);
 
                 return CreatedAtAction(
                     nameof(GetCountryById),
@@ -210,7 +211,7 @@ namespace Artemis.API.Controllers
 
                 if (location is not null)
                 {
-                    return Conflict(createRequest.Name);
+                    return Conflict(location);
                 }
 
                 City? city = await _cityService.GetByIdAsync(createRequest.CityId);
@@ -227,9 +228,12 @@ namespace Artemis.API.Controllers
                     return BadRequest(createRequest.CountryId);
                 }
 
-                location = new(createRequest.Name, city, country);
+                location = new();
+                location.Name = createRequest.Name;
+                location.Country = country;
+                location.City = city;
 
-                _locationService.CreateLocationAsync(location);
+                await _locationService.CreateLocationAsync(location);
 
                 return CreatedAtAction(
                     nameof(GetLocationById),
@@ -308,12 +312,12 @@ namespace Artemis.API.Controllers
 
                 if (timeStamp is not null)
                 {
-                    return Conflict(timestamp);
+                    return Conflict(timeStamp);
                 }
 
                 timeStamp = new(timestamp);
 
-                _timestampService.CreateTimestampAsync(timeStamp);
+                await _timestampService.CreateTimestampAsync(timeStamp);
 
                 return CreatedAtAction(
                     nameof(GetTimestampById),
@@ -366,11 +370,23 @@ namespace Artemis.API.Controllers
                         {
                             if (Match.CreateMatch.TryGetValue(createRequest.Type, out Func<MatchCreateRequestDto, Match>? creator))
                             {
+
                                 Match match = creator(createRequest);
 
                                 List<Shot> shots = match.Shots;
 
-                                _shotService.CreateShotsAsync(shots);
+                                foreach (Shot shot in match.Shots)
+                                {
+
+                                    if (shot.TimeStamp is not null)
+                                    {
+
+                                        shot.TimeStamp = await _timestampService.GetByIdAsync(shot.TimeStamp.Id);
+
+                                    }
+                                }
+
+                                await _shotService.CreateShotsAsync(shots);
 
                                 Timestamp startTimestamp = await _timestampService
                                     .GetByIdAsync(createRequest.StartTimestampId);
@@ -384,11 +400,15 @@ namespace Artemis.API.Controllers
                                 User shooter = await _userService.GetByIdAsync(createRequest.ShooterId);
 
                                 match.StartTimestamp = startTimestamp;
+
                                 match.EndTimestamp = endTimestamp;
+
                                 match.Location = location;
+
                                 match.Shooter = shooter;
 
-                                _matchService.CreateMatchAsync(match);
+
+                                await _matchService.CreateMatchAsync(match);
 
                                 return CreatedAtAction(
                                     nameof(GetMatchById),
@@ -425,6 +445,7 @@ namespace Artemis.API.Controllers
             if (!match.Shooter.Id.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                 return Unauthorized();
 
+            match.Shots = await _shotService.GetMultiAsync(new(match.Shots.Select(x => x.Id)));
             match.Location = await _locationService.GetByIdAsync(match.Location.Id);
             return Ok(match.CreateDto());
         }
@@ -467,32 +488,53 @@ namespace Artemis.API.Controllers
                         {
                             if (updateRequest.Shots.Count.Equals(expectedShotTotal))
                             {
-                                if (Match.UpdateMatch.TryGetValue(updateRequest.Type,
-                                        out Func<MatchUpdateRequestDto, Match>? creator))
+                                match.AirPressure = updateRequest.AirPressure;
+                                match.AirTemperature = updateRequest.AirTemperature;
+                                match.WindDirection = updateRequest.WindDirection;
+                                match.WindSpeed = updateRequest.WindSpeed;
+                                match.EnvironmentNotes = updateRequest.EnvironmentNotes;
+                                match.EquipmentNotes = updateRequest.EquipmentNotes;
+                                match.ShooterNotes = updateRequest.ShooterNotes;
+
+                                match.StartTimestamp =
+                                    await _timestampService.GetByIdAsync(updateRequest.StartTimestampId);
+
+                                match.EndTimestamp =
+                                    await _timestampService.GetByIdAsync(updateRequest.EndTimestampId);
+
+                                match.Location = await _locationService.GetByIdAsync(updateRequest.LocationId);
+
+                                List<Shot> shots =
+                                    await _shotService.GetMultiAsync(
+                                        new(updateRequest.Shots.Select(x => x.Id)));
+
+                                shots = shots.OrderBy(x => x.Position).ToList();
+
+                                for (int i = 0; i < shots.Count; i++)
                                 {
-                                    match = creator(updateRequest);
+                                    if (updateRequest.Shots[i].Timestamp is not null)
+                                    {
+                                        shots[i].TimeStamp =
+                                            await _timestampService.GetByIdAsync(
+                                                updateRequest.Shots[i].Timestamp!.Id);
+                                    }
+                                    else shots[i].TimeStamp = null;
 
-                                    match.Shooter = await _userService.GetByIdAsync(updateRequest.ShooterId);
-
-                                    match.StartTimestamp =
-                                        await _timestampService.GetByIdAsync(updateRequest.StartTimestampId);
-
-                                    match.EndTimestamp =
-                                        await _timestampService.GetByIdAsync(updateRequest.EndTimestampId);
-
-                                    match.Location = await _locationService.GetByIdAsync(updateRequest.LocationId);
-
-                                    _shotService.UpdateShotsAsync(match.Shots);
-
-                                    _matchService.UpdateMatchAsync(match);
-
-                                    return CreatedAtAction(
-                                        nameof(GetMatchById),
-                                        new { id = match.Id },
-                                        match.CreateDto());
+                                    shots[i].HorizontalDisplacement = updateRequest.Shots[i].HorizontalDisplacement;
+                                    shots[i].VerticalDisplacement = updateRequest.Shots[i].VerticalDisplacement;
+                                    shots[i].Value = updateRequest.Shots[i].Value;
                                 }
 
-                                return BadRequest(updateRequest.Type);
+                                match.Shots = shots;
+
+                                await _shotService.UpdateShotsAsync(match.Shots);
+
+                                await _matchService.UpdateMatchAsync(match);
+
+                                return CreatedAtAction(
+                                    nameof(GetMatchById),
+                                    new { id = match.Id },
+                                    match.CreateDto());
                             }
 
                             return BadRequest(updateRequest.Shots.Count);

@@ -27,7 +27,7 @@ namespace Artemis.Contracts.DTOs
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)
@@ -66,6 +66,25 @@ namespace Artemis.Contracts.DTOs
             match.EquipmentNotes,
             match.ShooterNotes)
         {
+        }
+
+        public MatchUpdateRequestDto(MatchOutputDto outputDto)
+            : this()
+        {
+            Id = outputDto.Id;
+            Type = outputDto.Type;
+            ShooterId = outputDto.ShooterId;
+            StartTimestampId = outputDto.StartTimestampId;
+            EndTimestampId = outputDto.EndTimestampId;
+            LocationId = outputDto.LocationId;
+            Shots = outputDto.Shots;
+            AirTemperature = outputDto.AirTemperature;
+            AirPressure = outputDto.AirPressure;
+            WindSpeed = outputDto.WindSpeed;
+            WindDirection = outputDto.WindDirection;
+            EnvironmentNotes = outputDto.EnvironmentNotes;
+            EquipmentNotes = outputDto.EquipmentNotes;
+            ShooterNotes = outputDto.ShooterNotes;
         }
     }
 }

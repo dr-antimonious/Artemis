@@ -16,11 +16,14 @@ namespace Artemis.Services
         public async Task DeleteShotAsync(Shot shot)
         {
             await _unitOfWork.Shots.Delete(shot);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Shot?> GetByIdAsync(string id)
             => await _unitOfWork.Shots.GetAsync(id);
+
+        public async Task<List<Shot>> GetMultiAsync(List<string> ids)
+            => await _unitOfWork.Shots.GetMulti(ids);
 
         public async Task UpdateShotAsync(Shot shot)
             => await _unitOfWork.Shots.Update(shot);

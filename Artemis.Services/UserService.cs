@@ -32,19 +32,19 @@ namespace Artemis.Services
         public async Task CreateUserAsync(User user)
         {
             await _unitOfWork.Users.Create(user);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(User user)
         {
             await _unitOfWork.Users.Delete(user);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(User user)
         {
             await _unitOfWork.Users.Update(user);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public UserService(IUnitOfWork unitOfWork, ITokenGenerator tokenGenerator)

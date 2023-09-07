@@ -10,7 +10,7 @@ namespace Artemis.Services
         public async Task CreateTimestampAsync(Timestamp timestamp)
         {
             await _unitOfWork.Timestamps.Create(timestamp);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Timestamp?> GetByIdAsync(string id)
@@ -22,7 +22,7 @@ namespace Artemis.Services
         public async Task UpdateTimestampAsync(Timestamp timestamp)
         {
             await _unitOfWork.Timestamps.Update(timestamp);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public TimestampService(IUnitOfWork unitOfWork)

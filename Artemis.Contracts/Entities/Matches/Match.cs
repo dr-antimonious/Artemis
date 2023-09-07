@@ -57,6 +57,22 @@ namespace Artemis.Contracts.Entities.Matches
             }
         }
 
+        public static Dictionary<string, Func<MatchOutputDto, Match>> ConvertMatch
+        {
+            get
+            {
+                return new Dictionary<string, Func<MatchOutputDto, Match>>
+                {
+                    {"3P50", x => new _3P50Match(x)},
+                    {"AP10", x => new AP10Match(x)},
+                    {"AR10", x => new AR10Match(x)},
+                    {"P25", x => new P25Match(x)},
+                    {"RFP25", x => new RFP25Match(x)},
+                    {"TS", x => new TSMatch(x)}
+                };
+            }
+        }
+
         public static Dictionary<Type, string> TypeConversion
         {
             get
@@ -94,7 +110,7 @@ namespace Artemis.Contracts.Entities.Matches
 
         public double? WindSpeed { get; set; }
 
-        public int? WindDirection { get; set; }
+        public string? WindDirection { get; set; }
 
         public string? EnvironmentNotes { get; set; }
 
@@ -191,7 +207,7 @@ namespace Artemis.Contracts.Entities.Matches
                 nameof(GetBullseyeCountOfShots),
                 this.GetType().ToString());
 
-        protected Match()
+        public Match()
         {
             Id = Guid.NewGuid().ToString();
             Shots = new();
@@ -205,7 +221,7 @@ namespace Artemis.Contracts.Entities.Matches
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)
@@ -234,7 +250,7 @@ namespace Artemis.Contracts.Entities.Matches
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)
@@ -278,6 +294,22 @@ namespace Artemis.Contracts.Entities.Matches
             EquipmentNotes = matchUpdateRequest.EquipmentNotes;
             ShooterNotes = matchUpdateRequest.ShooterNotes;
             Shots = matchUpdateRequest.Shots.Convert<Shot, ExtendedShotDto>();
+        }
+
+        protected Match(MatchOutputDto matchOutput)
+        {
+            Id = matchOutput.Id;
+            StartTimestamp = matchOutput.StartTimestamp;
+            EndTimestamp = matchOutput.EndTimestamp;
+            Location = matchOutput.Location;
+            AirTemperature = matchOutput.AirTemperature;
+            AirPressure = matchOutput.AirPressure;
+            WindSpeed = matchOutput.WindSpeed;
+            WindDirection = matchOutput.WindDirection;
+            EnvironmentNotes = matchOutput.EnvironmentNotes;
+            EquipmentNotes = matchOutput.EquipmentNotes;
+            ShooterNotes = matchOutput.ShooterNotes;
+            Shots = matchOutput.Shots.Convert<Shot, ExtendedShotDto>();
         }
     }
 }

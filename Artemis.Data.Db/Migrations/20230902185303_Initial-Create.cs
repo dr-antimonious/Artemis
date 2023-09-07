@@ -257,7 +257,7 @@ namespace Artemis.Data.Db.Migrations
                     AirTemperature = table.Column<double>(type: "float", nullable: true),
                     AirPressure = table.Column<double>(type: "float", nullable: true),
                     WindSpeed = table.Column<double>(type: "float", nullable: true),
-                    WindDirection = table.Column<int>(type: "int", nullable: true),
+                    WindDirection = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EnvironmentNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EquipmentNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShooterNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),

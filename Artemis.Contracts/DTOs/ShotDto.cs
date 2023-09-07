@@ -11,7 +11,7 @@ namespace Artemis.Contracts.DTOs
         public double Value { get; set; }
 
         [Required(ErrorMessage = "Shot position is required"),
-        Range(1, 120)]
+        Range(1, 126)]
         public int Position { get; set; }
 
         public Timestamp? Timestamp { get; set; }

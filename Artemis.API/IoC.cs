@@ -67,7 +67,7 @@ namespace Artemis.API
                 opt =>
                 {
                     opt.UseSqlServer(
-                        "Server=162.0.233.165,5000;Initial catalog=ArtemisTestDb;User Id=sa;Password=m7jay7hYVT7@;TrustServerCertificate=True",
+                        "Server=172.19.0.2,1433;Initial catalog=ArtemisTestDb;User Id=sa;Password=m7jay7hYVT7@;TrustServerCertificate=True",
                         op => op.MigrationsAssembly("Artemis.Data.Db"));
                 });
 

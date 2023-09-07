@@ -4,7 +4,7 @@
     {
         public string FullName => $"{FirstName} {AdditionalNames} {LastName}";
 
-        private UserDto()
+        public UserDto()
         {
         }
 

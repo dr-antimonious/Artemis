@@ -10,7 +10,7 @@ namespace Artemis.Services
         public async Task CreateCountryAsync(Country country)
         {
             await _unitOfWork.Countries.Create(country);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Country?> GetByIdAsync(string id)
@@ -28,7 +28,7 @@ namespace Artemis.Services
         public async Task UpdateCountryAsync(Country country)
         {
             await _unitOfWork.Countries.Update(country);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public CountryService(IUnitOfWork unitOfWork)

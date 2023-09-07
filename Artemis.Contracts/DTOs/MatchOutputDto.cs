@@ -28,7 +28,7 @@ namespace Artemis.Contracts.DTOs
             double? airTemperature = null,
             double? airPressure = null,
             double? windSpeed = null,
-            int? windDirection = null,
+            string? windDirection = null,
             string? environmentNotes = null,
             string? equipmentNotes = null,
             string? shooterNotes = null)

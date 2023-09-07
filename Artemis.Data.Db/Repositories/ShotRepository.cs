@@ -29,6 +29,12 @@ namespace Artemis.Data.Db.Repositories
                 .Include(x => x.TimeStamp)
                 .FirstOrDefaultAsync(x => x.Id.Equals(id)));
 
+        public async Task<List<Shot>> GetMulti(List<string> ids)
+            => await HandleNullCancelTask(
+                _shots.Include(x => x.TimeStamp)
+                    .Where(x => ids.Contains(x.Id))
+                    .ToListAsync());
+
         public async Task Update(Shot entity)
             => await Task.Run(() => _shots.Update(entity));
 

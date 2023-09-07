@@ -10,19 +10,19 @@ namespace Artemis.Services
         public async Task CreateMatchAsync(Match match)
         {
             await _unitOfWork.Matches.Create(match);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteSingleAsync(Match match)
         {
             await _unitOfWork.Matches.Delete(match);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteMultipleAsync(List<Match> matches)
         {
             await _unitOfWork.Matches.DeleteMulti(matches);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Match?> GetByIdAsync(string id)
@@ -37,7 +37,7 @@ namespace Artemis.Services
         public async Task UpdateMatchAsync(Match match)
         {
             await _unitOfWork.Matches.Update(match);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public MatchService(IUnitOfWork unitOfWork)

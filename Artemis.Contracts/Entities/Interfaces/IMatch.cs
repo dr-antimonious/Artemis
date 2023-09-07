@@ -20,7 +20,7 @@ namespace Artemis.Contracts.Entities.Interfaces
 
         double? WindSpeed { get; set; }
 
-        int? WindDirection { get; set; }
+        string? WindDirection { get; set; }
 
         string? EnvironmentNotes { get; set; }
 
